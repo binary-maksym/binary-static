@@ -29,7 +29,10 @@ if (isJapanTrading()) {
       staysinout: Content.localize().textStayInBreakOut,
     };
 
+    console.log(menuText);
+
     $.each(markets, function(key, value) {
+      console.log(value);
       $menu
         .append(
           $('<li />').append(
