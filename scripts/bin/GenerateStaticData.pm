@@ -528,7 +528,10 @@ sub _texts {
         push @texts, localize('{JAPAN ONLY}It is determined the customers have basic knowledge of option trading by the results of the knowledge test. If the customers start trading, the customers need to agree not have lawsuit despite the customer are shortage of knowledge related to options trading, and it cause damages, we admit to open the trading account.');
         push @texts, localize('{JAPAN ONLY}It prohibits the copying of the questions . In addition , You agree that you will not leak to third party');
         push @texts, localize('You need to finish all 20 questions.');
-
+        push @texts, localize('{JAPAN ONLY}HIGH/LOW');
+        push @texts, localize('{JAPAN ONLY}TOUCH /NO-TOUCH');
+        push @texts, localize('{JAPAN ONLY}END-IN/END-OUT');
+        push @texts, localize('{JAPAN ONLY}STAY-IN/BREAK-OUT');
 
         #strings for digit_infows
         push @texts, localize('Select market');
