@@ -13,8 +13,7 @@ pjax_config_page('/\?.+|/home', function() {
 pjax_config_page('/why-us', function() {
     return {
         onLoad: function() {
-            var whyus = $('.why-us');
-            sidebar_scroll(whyus);
+            sidebar_scroll($('.why-us'));
             hide_if_logged_in();
         },
         onUnload: function() {
@@ -63,8 +62,11 @@ pjax_config_page('/get-started', function() {
         onLoad: function() {
             if (!/jp/.test(window.location.pathname) && page.language().toLowerCase() === 'ja') {
               window.location.href = page.url.url_for('get-started-jp');
-            }
+            } else if (/jp/.test(window.location.pathname)) {
+              return;
+          } else {
             get_started_behaviour();
+          }
         },
         onUnload: function() {
             $(window).off('scroll');

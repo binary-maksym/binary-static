@@ -122,7 +122,7 @@ function BinarySocketClass() {
         binarySocket.onmessage = function (msg){
             var response = JSON.parse(msg.data);
             if (response) {
-                if(response.hasOwnProperty('echo_req') && response.echo_req.hasOwnProperty('passthrough')) {
+                if(response.hasOwnProperty('echo_req') && response.echo_req !== null && response.echo_req.hasOwnProperty('passthrough')) {
                     var passthrough = response.echo_req.passthrough;
                     if(passthrough.hasOwnProperty('req_number')) {
                         clearInterval(timeouts[response.echo_req.passthrough.req_number]);
@@ -181,7 +181,7 @@ function BinarySocketClass() {
                     SessionDurationLimit.exclusionResponseHandler(response);
                 } else if (type === 'payout_currencies' && response.echo_req.hasOwnProperty('passthrough') && response.echo_req.passthrough.handler === 'page.client') {
                     page.client.response_payout_currencies(response);
-                } else if (type === 'get_settings') {
+                } else if (type === 'get_settings' && response.get_settings) {
                     if(!$.cookie('residence') && response.get_settings.country_code) {
                       page.client.set_cookie('residence', response.get_settings.country_code);
                       page.client.residence = response.get_settings.country_code;
@@ -222,13 +222,13 @@ function BinarySocketClass() {
                 } else if (type === 'reality_check') {
                     if (response.echo_req.passthrough.for === 'init_rc') {
                         var currentData = TUser.get();
-                        var addedLoginTime = Object.assign({logintime: response.reality_check.start_time}, currentData);
+                        var addedLoginTime = $.extend({logintime: response.reality_check.start_time}, currentData);
                         TUser.set(addedLoginTime);
                         RealityCheck.init();
                     } else {
                         RealityCheck.realityCheckWSHandler(response);
                     }
-                } else if (type === 'get_account_status') {
+                } else if (type === 'get_account_status' && response.get_account_status) {
                   if (response.get_account_status.risk_classification === 'high' && page.header.qualify_for_risk_classification()) {
                     send({get_financial_assessment: 1});
                   } else {
