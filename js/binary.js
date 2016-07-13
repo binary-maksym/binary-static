@@ -80759,11 +80759,12 @@ WSTickDisplay.updateChart = function(data, contract) {
         alert('lol1');
         window.location.href = page.url.url_for('jptrading');
         return;
-    } else if (!japanese_client() && /jp/.test(window.location.pathname)) {
-        alert('lol2');
-        window.location.href = page.url.url_for('trading');
-        return;
-    }
+    } 
+    // else if (!japanese_client() && /jp/.test(window.location.pathname)) {
+    //     alert('lol2');
+    //     window.location.href = page.url.url_for('trading');
+    //     return;
+    // }
     trading_page = 1;
     if(sessionStorage.getItem('currencies')){
       displayCurrencies();
