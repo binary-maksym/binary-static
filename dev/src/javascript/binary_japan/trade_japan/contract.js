@@ -36,6 +36,8 @@ if (isJapanTrading()) {
                 contractCategories = {},
                 barrierCategory;
 
+            if (!contracts) return;
+
             open = contracts['open'];
             close = contracts['close'];
 
@@ -69,6 +71,8 @@ if (isJapanTrading()) {
             var contracts = Contract.contracts()['contracts_for'],
                 tradeContractForms = {};
 
+            if (!contracts) return;
+
             contracts.available.forEach(function(currentObj) {
                 var contractCategory = currentObj['contract_category'];
                 if (contractCategory && !tradeContractForms.hasOwnProperty(contractCategory)) {
@@ -83,6 +87,8 @@ if (isJapanTrading()) {
                     }
                 }
             });
+
+            if (Object.keys(tradeContractForms).length === 0) return;
 
             if (tradeContractForms.risefall || tradeContractForms.higherlower) {
                 tradeContractForms['updown'] = Content.localize().textFormUpDown;

@@ -38,7 +38,8 @@ var sidebar_scroll = function(elm_selector) {
             sticky_navigation();
 
             for (var i = 0; i < length; i++) {
-                if ($(window).scrollTop() === 0 || $(this).scrollTop() >= $('.section:eq(' + i + ')').offset().top - 5) {
+                var sectionOffset = $('.section:eq(' + i + ')').offset();
+                if ($(window).scrollTop() === 0 || (sectionOffset && $(this).scrollTop() >= sectionOffset.top - 5)) {
                     sidebar_nav.find('li').removeClass('selected');
 
                     if ($(window).scrollTop() === 0) {
@@ -68,14 +69,14 @@ var get_started_behaviour = function() {
         var nav_next = $('.subsection-navigation .next');
 
         if (to_show.hasClass('first')) {
-            nav_back.addClass('disabled');
-            nav_next.removeClass('disabled');
+            nav_back.addClass('button-disabled');
+            nav_next.removeClass('button-disabled');
         } else if (to_show.hasClass('last')) {
-            nav_back.removeClass('disabled');
-            nav_next.addClass('disabled');
+            nav_back.removeClass('button-disabled');
+            nav_next.addClass('button-disabled');
         } else {
-            nav_back.removeClass('disabled');
-            nav_next.removeClass('disabled');
+            nav_back.removeClass('button-disabled');
+            nav_next.removeClass('button-disabled');
         }
 
         fragment = to_show.find('a[name]').attr('name').slice(0, -8);
@@ -92,7 +93,7 @@ var get_started_behaviour = function() {
     if (len) {
         nav.on('click', 'a', function() {
             var button = $(this);
-            if (button.hasClass('disabled')) {
+            if (button.hasClass('button-disabled')) {
                 return false;
             }
             var now_showing = $('.subsection:not(.hidden)');
@@ -318,7 +319,7 @@ function generateBirthDate(country){
     var endYear = currentYear - 17;
     //years
     dropDownNumbers(year, startYear, endYear);
-    if ((country && country === 'jp') || page.language().toLowerCase() === 'ja') {
+    if (japanese_client()) {
       days.options[0].innerHTML = text.localize('Day');
       months.options[0].innerHTML = text.localize('Month');
       year.options[0].innerHTML = text.localize('Year');
@@ -441,7 +442,7 @@ function handle_residence_state_ws(){
             for (i = 0; i < states_list.length; i++) {
                 appendTextValueChild(select, states_list[i].text, states_list[i].value);
             }
-            select.parentNode.parentNode.setAttribute('style', 'display:block');
+            select.parentNode.parentNode.show();
             if (window.state) {
               select.value = window.state;
             }
@@ -488,6 +489,7 @@ function handle_residence_state_ws(){
 
 function generateState() {
     var state = document.getElementById('address-state');
+    if (state.length !== 0) return;
     appendTextValueChild(state, Content.localize().textSelect, '');
     if (page.client.residence !== "") {
       BinarySocket.send({ states_list: page.client.residence });
@@ -514,9 +516,9 @@ function limitLanguage(lang) {
   if (document.getElementById('language_select')) {
     $('#language_select').remove();
     $('#gmt-clock').removeClass();
-    $('#gmt-clock').addClass('grd-grid-6 grd-grid-mobile-12');
+    $('#gmt-clock').addClass('gr-6 gr-12-m');
     $('#contact-us').removeClass();
-    $('#contact-us').addClass('grd-grid-6 grd-hide-mobile');
+    $('#contact-us').addClass('gr-6 gr-hide-m');
   }
 }
 
@@ -537,8 +539,8 @@ function checkClientsCountry() {
   }
 }
 
-if (page.language() === 'ID') {
-  change_blog_link('id');
+function japanese_client() {
+    return (page.language().toLowerCase() === 'ja' || ($.cookie('residence') && $.cookie('residence') === 'jp') || localStorage.getItem('clients_country') === 'jp');
 }
 
 function change_blog_link(lang) {
@@ -546,6 +548,19 @@ function change_blog_link(lang) {
   if (!regex.test($('.blog a').attr('href'))) {
     $('.blog a').attr('href', $('.blog a').attr('href') + '/' + lang + '/');
   }
+}
+
+//hide and show hedging value if trading purpose is set to hedging
+function detect_hedging($purpose, $hedging) {
+    $purpose.change(function(evt) {
+      if ($purpose.val() === 'Hedging') {
+        $hedging.removeClass('invisible');
+      }
+      else if ($hedging.is(":visible")) {
+        $hedging.addClass('invisible');
+      }
+      return;
+    });
 }
 
 $(function() {

@@ -1,5 +1,5 @@
 <div id="content" class="trading-content">
-          <!-- Google Tag Manager -->
+        <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MZWFF7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -8,12 +8,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MZWFF7');</script>
 <!-- End Google Tag Manager -->
-          <div id="page_info" style="display:none;">
-              <title>Sharp Prices. Smart Trading. | Binary.com</title>
-              <div id="content_class">trading-content</div>
-          </div>
-          
-          <div class="grd-container">
+        <div id="page_info" style="display:none;">
+            <title>Preços Afiados. Negociações Inteligentes. | Binary.com</title>
+            <div id="content_class">trading-content</div>
+        </div>
+        
+        <div class="container">
 
 
   <div id="trading_socket_container" class="tab-menu-wrap ">
@@ -207,67 +207,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <div id="pricing_table"></div>
                </div>
                <div id="open_positions_container"><div id="portfolio">
-  <div class="grd-grid-12">
 
     <h1 class="portfolio-header-margin">Portfólio</h1>
 
+    <p class="notice-msg center-text invisible" id="err-msg"></p>
+
     <div id="portfolio-loading"></div>
 
-    <div id="portfolio-content" class="dynamic">
-      <div class="grd-parent grd-row-padding">
-        <div class="grd-hide-mobile grd-hide-phablet">
-          Saldo de conta:  
-          <span class="loading" data-id="balance"></span>
+    <div id="portfolio-content" class="invisible">
+        <div class="gr-parent gr-padding-10">
+            <div class="gr-hide-m gr-hide-p">
+                Saldo de conta: 
+                <span class="loading" id="portfolio-balance"></span>
 
-          <!-- If the account ballance is zero we show the following button, otherwise we remove it -->
-          <a href="/binary-static/pt/cashier/forwardws.html#deposit" id="if-balance-zero" class="dynamic button button_large by_client_type client_real with_login_cookies">
-            <span>Faça um Depósito</span>
-          </a>
+                <!-- If the account balance is zero we show the following button, otherwise we remove it -->
+                <a href="/binary-static/pt/cashier/forwardws.html#deposit" id="if-balance-zero" class="invisible button button_large by_client_type client_real with_login_cookies">
+                    <span>Faça um Depósito</span>
+                </a>
+            </div>
         </div>
-      </div>
 
-      <div id="portfolio-no-contract">
-        <p>Nenhuma posição em aberto.</p>
-      </div>
+        <div id="portfolio-no-contract">
+            <p>Nenhuma posição em aberto.</p>
+        </div>
 
-      <table class="flex-table" id="portfolio-table">
+        <table class="flex-table" id="portfolio-table">
+            <thead>
+                <tr class="flex-tr">
+                    <th class="ref flex-tr-child">Ref.</th>
+                    <th class="payout flex-tr-child">Possível Prêmio</th>
+                    <th class="details flex-tr-child">Detalhes do Contrato</th>
+                    <th class="purchase flex-tr-child">Comprar</th>
+                    <th class="indicative flex-tr-child">Indicativo</th>
+                    <th class="button"></th>
+                </tr>
+            </thead>
 
-        <thead>
-          <tr class="flex-tr">
-            <th class="ref flex-tr-child">Ref.</th>
-            <th class="payout flex-tr-child">Possível Prêmio</th>
-            <th class="details flex-tr-child">Detalhes do Contrato</th>
-            <th class="purchase flex-tr-child">Comprar</th>
-            <th class="indicative flex-tr-child">Indicativo</th>
-            <th class="button">&nbsp;</th>
-          </tr>
-        </thead>
+            <tbody id="portfolio-body"></tbody>
 
-        <!-- Dynamic content. Will be replaced with parsed HTML by javascript -->
-        <tbody id="portfolio-dynamic">
-          <tr class="flex-tr" data-contract_id="!contract_id!">
-            <td class="ref flex-tr-child">!transaction_id!</td>
-            <td class="payout flex-tr-child">!currency! <strong>!payout!</strong></td>
-            <td class="details flex-tr-child">!longcode!</td>
-            <td class="purchase flex-tr-child">!currency! <strong>!buy_price!</strong></td>
-            <td class="indicative flex-tr-child">!currency! <strong class="indicative_price"></strong></td>
-            <td class="button flex-tr-child"><button class="button open_contract_detailsws" contract_id="!contract_id!">:view:</button></td>
-          </tr>
-        </tbody>
-
-        <tfoot>
-          <tr class="flex-tr">
-            <th class="ref flex-tr-child" colspan="3">&nbsp;</th>
-            <th class="cost flex-tr-child" id="cost-of-open-positions"></th>
-            <th class="value flex-tr-child" id="value-of-open-positions" colspan="2"></th>
-          </tr>
-        </tfoot>
-
-      </table><!-- portfolio-table ends -->
-
+            <tfoot>
+                <tr class="flex-tr">
+                    <th class="ref flex-tr-child" colspan="3"></th>
+                    <th class="cost flex-tr-child" id="cost-of-open-positions"></th>
+                    <th class="value flex-tr-child" id="value-of-open-positions" colspan="2"></th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-  </div>
-</div><!-- div#portfolio ends --></div>
+</div></div>
             </div>
          </div>
       </div>
@@ -283,6 +270,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                      <div class="col" id="contract_purchase_cost"></div>
                      <div class="col" id="contract_purchase_profit"></div>
                   </div>
+                  <div id="contract_purchase_barrier"></div>
                   <div id="contract_purchase_reference"></div>
                   <div class="button">
                      <button id="contract_purchase_button" class="button open_contract_detailsws"></button>
@@ -299,7 +287,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          <div class="row-inner" id="contracts_list">
             <div id="loading_container2" class="overlay_container"></div>
             <div class="col price_container row-inner" id="price_container_top">
-               <div class="col row">
+               <div class="col gr-row">
                   <div class="price_wrapper row">
                       <h4 class="contract_heading"></h4>
                       <span class="amount_wrapper">
@@ -314,7 +302,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           </div>
                         </div>
                         <div class="contract_purchase button">
-                           <button class="purchase_button contract_description" id="purchase_button_top" data-balloon-length="xlarge" value="purchase"></button>
+                           <button class="purchase_button contract_description no-underline" id="purchase_button_top" data-balloon-length="xlarge" value="purchase"></button>
                         </div>
                       </span>
                   </div>
@@ -323,7 +311,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                <div class="col contract_error"></div>
             </div>
             <div class="col price_container row-inner" id="price_container_bottom">
-               <div class="col row">
+               <div class="col gr-row">
                   <div class="price_wrapper row">
                       <h4 class="contract_heading"></h4>
                       <span class="amount_wrapper">
@@ -338,7 +326,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           </div>
                         </div>
                         <div class="contract_purchase button">
-                          <button class="purchase_button contract_description" id="purchase_button_bottom" data-balloon-length="xlarge" value="purchase"></button>
+                          <button class="purchase_button contract_description no-underline" id="purchase_button_bottom" data-balloon-length="xlarge" value="purchase"></button>
                         </div>
                       </span>
                   </div>

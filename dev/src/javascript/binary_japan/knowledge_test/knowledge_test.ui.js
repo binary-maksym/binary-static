@@ -105,14 +105,10 @@ var KnowledgeTestUI = (function () {
             return;         // topbar not exist, do nothing
         }
 
-        var $knowledgeTestLink = $('<a></a>', {
-            class: 'pjaxload',
-            id: 'knowledgetest-link',
-            href: page.url.url_for('/new_account/knowledge_testws')
-        }).text(text.localize('{JAPAN ONLY}Take knowledge test'));
-
-        $topbarmsg.children('a').addClass('invisible');
-        $topbarmsg.append($knowledgeTestLink);
+        $topbarmsg.find('> span').removeClass('invisible');
+        $topbarmsg.removeClass('invisible')
+            .find('a').removeClass('invisible')
+                .attr('href', page.url.url_for('/new_account/knowledge_testws')).html($('<span/>', {text: text.localize('{JAPAN ONLY}Take knowledge test')}));
     }
 
     return {
@@ -124,4 +120,3 @@ var KnowledgeTestUI = (function () {
         createKnowledgeTestLink: createKnowledgeTestLink,
     };
 }());
-

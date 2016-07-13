@@ -125,7 +125,7 @@ var FinancialAssessmentws = (function(){
     var checkIsVirtual = function(){
         if(page.client.is_virtual()) {
             $("#assessment_form").addClass('invisible');
-            $('#response_on_success').addClass('notice-msg center').removeClass('invisible').text(text.localize('This feature is not relevant to virtual-money accounts.'));
+            $('#response_on_success').addClass('notice-msg center-text').removeClass('invisible').text(text.localize('This feature is not relevant to virtual-money accounts.'));
             hideLoadingImg(false);
             return true;
         }
@@ -144,6 +144,9 @@ var FinancialAssessmentws = (function(){
 pjax_config_page_require_auth("user/settings/assessmentws", function() {
     return {
         onLoad: function() {
+            if (japanese_client()) {
+                window.location.href = page.url.url_for('user/settingsws');
+            }
             BinarySocket.init({
                 onmessage: function(msg) {
                     var response = JSON.parse(msg.data);

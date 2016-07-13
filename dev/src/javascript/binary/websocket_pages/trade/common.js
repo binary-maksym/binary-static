@@ -15,6 +15,7 @@
  */
  function displayContractForms(id, elements, selected) {
      'use strict';
+     if (!id || !elements || !selected) return;
      var target = document.getElementById(id),
          fragment = document.createDocumentFragment(),
          len = elements.length;
@@ -752,7 +753,7 @@ function marketOrder(market){
             random_index:    19,
             random_daily:    20,
             random_nightly:  21
-    }; 
+    };
     return order[market];
 }
 
@@ -774,6 +775,7 @@ function displayTooltip(market, symbol){
         guide = document.getElementById('guideBtn'),
         app = document.getElementById('androidApp'),
         appstore = document.getElementById('appstore');
+    if (!market || !symbol) return;
     if (market.match(/^volidx/) || symbol.match(/^R/) || market.match(/^random_index/) || market.match(/^random_daily/)){
         if (guide) guide.hide();
         tip.show();
@@ -912,9 +914,16 @@ function chartFrameSource() {
 }
 
 function setChartSource() {
-  document.getElementById('chart_frame').src = 'https://webtrader.binary.com?affiliates=true&instrument=' + document.getElementById('underlying').value + '&timePeriod=' + document.getElementById('time_period').value + '&gtm=true';
+  document.getElementById('chart_frame').src = 'https://webtrader.binary.com?affiliates=true&instrument=' + document.getElementById('underlying').value + '&timePeriod=' + document.getElementById('time_period').value + '&gtm=true&lang=' + (page.language() || 'en').toLowerCase();
 }
 
 function isJapanTrading(){
     return $('#trading_socket_container.japan').length;
+}
+
+//used temporarily for mocha test
+if (typeof module !== 'undefined') {
+    module.exports = {
+        addComma: addComma
+    };
 }

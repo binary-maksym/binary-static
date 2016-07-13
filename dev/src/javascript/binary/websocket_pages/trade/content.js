@@ -145,11 +145,7 @@ var Content = (function() {
             textUnits: text.localize('Units'),
             textMessagePasswordScore: text.localize( 'Password score is: [_1]. Passing score is: 20.'),
             textShouldNotLessThan: text.localize('Please enter a number greater or equal to [_1].'),
-            textNumberLimit: text.localize('Please enter a number between [_1].'),       // [_1] should be a range
-            textHighLow: text.localize('HIGH/LOW'),
-            textTouchNoTouch: text.localize('TOUCH /NO-TOUCH'),
-            textEndInOut: text.localize('END-IN/END-OUT'),
-            textStayInBreakOut: text.localize('STAY-IN/BREAK-OUT'),
+            textNumberLimit: text.localize('Please enter a number between [_1].')       // [_1] should be a range
         };
 
         var starTime = document.getElementById('start_time_label');

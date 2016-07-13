@@ -231,7 +231,7 @@ var Highchart = (function() {
       } else if ((type === 'history' || type === 'candles' || type === 'tick' || type === 'ohlc') && !error){
           responseID = response[type].id;
           // send view popup the response ID so view popup can forget the calls if it's closed before contract ends
-          ViewPopupWS.storeSubscriptionID(responseID, 'chart');
+          if (responseID) ViewPopupWS.storeSubscriptionID(responseID, 'chart');
           options = { 'title' : contract.display_name };
           if (response.history || response.candles) {
             if (response.history) {
@@ -244,11 +244,11 @@ var Highchart = (function() {
                   for (i = 0; i < response.history.times.length; i++) {
                       if (entry_tick_time && parseInt(response.history.times[i]) === parseInt(entry_tick_time)) {
                           // set the chart to display from the tick before entry_tick_time
-                          min_point = parseInt(response.history.times[i-1]);
+                          min_point = parseInt(response.history.times[(i === 0 ? i : i-1)]);
                           break;
-                      } else if (purchase_time && start_time > parseInt(purchase_time) && parseInt(response.history.times[i]) === parseInt(purchase_time) || (parseInt(response.history.times[i]) < parseInt(purchase_time) && parseInt(response.history.times[i+1]) > parseInt(purchase_time))) {
+                      } else if (purchase_time && start_time > parseInt(purchase_time) && parseInt(response.history.times[i]) === parseInt(purchase_time) || (parseInt(response.history.times[i]) < parseInt(purchase_time) && parseInt(response.history.times[(i === response.history.times.length - 1 ? i : i+1)]) > parseInt(purchase_time))) {
                           // set the chart to display from the tick before purchase_time
-                          min_point = parseInt(response.history.times[i-1]);
+                          min_point = parseInt(response.history.times[(i === 0 ? i : i-1)]);
                           break;
                       }
                   }
@@ -262,11 +262,11 @@ var Highchart = (function() {
                   return;
                 }
                 for (i = 1; i < response.candles.length; i++) {
-                    if (entry_tick_time && response.candles[i] && parseInt(response.candles[i].epoch) <= parseInt(entry_tick_time) && response.candles[i+1].epoch > parseInt(entry_tick_time)) {
+                    if (entry_tick_time && response.candles[i] && parseInt(response.candles[i].epoch) <= parseInt(entry_tick_time) && response.candles[(i === response.candles.length - 1 ? i : i+1)].epoch > parseInt(entry_tick_time)) {
                         // set the chart to display from the candle before entry_tick_time
                         min_point = parseInt(response.candles[i-1].epoch);
                         break;
-                    } else if (purchase_time && response.candles[i] && parseInt(response.candles[i].epoch) <= parseInt(purchase_time) && response.candles[i+1].epoch > parseInt(purchase_time)) {
+                    } else if (purchase_time && response.candles[i] && parseInt(response.candles[i].epoch) <= parseInt(purchase_time) && response.candles[(i === response.candles.length - 1 ? i : i+1)].epoch > parseInt(purchase_time)) {
                         // set the chart to display from the candle before purchase_time
                         min_point = parseInt(response.candles[i-1].epoch);
                         break;
@@ -498,9 +498,9 @@ var Highchart = (function() {
     else if (exit_tick_time) {end = exit_tick_time;}
     else {end = end_time;}
     if (response.history && response.history.times && (is_expired || is_sold)) {
-      for (i = response.history.times.length; i >= 0; i--) {
+      for (i = response.history.times.length - 1; i >= 0; i--) {
           if (parseInt(response.history.times[i]) === parseInt(end)) {
-              max_point = parseInt(response.history.times[i+1]);
+              max_point = parseInt(response.history.times[i === response.history.times.length - 1 ? i : i+1]);
               break;
           }
       }
@@ -606,6 +606,7 @@ var Highchart = (function() {
       chart.series[0].addPoint([options.tick.epoch*1000, options.tick.quote*1]);
     } else {
       var c = options.ohlc;
+      if (!c) return;
       var ohlc = [c.open_time*1000, c.open*1, c.high*1, c.low*1, c.close*1];
 
       if(last.x !== ohlc[0]) {

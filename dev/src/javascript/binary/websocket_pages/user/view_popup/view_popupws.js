@@ -82,25 +82,7 @@ var ViewPopupWS = (function() {
         // ----- Spread -----
         if(contract.shortcode.toUpperCase().indexOf('SPREAD') === 0) {
             contractType = 'spread';
-            getTickHistory(contract.underlying, contract.date_start + 1, contract.date_start + 60, 0);
-
-            var shortcode = contract.shortcode.toUpperCase();
-            var details   = shortcode.replace(contract.underlying.toUpperCase() + '_', '').split('_');
-            contract.per_point   = details[1];
-            contract.stop_loss   = details[3];
-            contract.stop_profit = details[4];
-            contract.is_point    = details[5] === 'POINT';
-
-            socketSend({
-                "proposal"        : 1,
-                "symbol"          : contract.underlying,
-                "currency"        : contract.currency,
-                "contract_type"   : details[0],
-                "amount_per_point": contract.per_point,
-                "stop_loss"       : contract.stop_loss,
-                "stop_profit"     : contract.stop_profit,
-                "stop_type"       : details[5].toLowerCase()
-            });
+            spreadShowContract();
         }
         // ----- Normal -----
         else {
@@ -111,17 +93,7 @@ var ViewPopupWS = (function() {
 
     // ===== Contract: Spread =====
     var spreadShowContract = function() {
-        if(Object.keys(history).length === 0 || Object.keys(proposal).length === 0) {
-            return;
-        }
-
         setLoadingState(false);
-
-        contract.is_up        = contract.shortcode['spread'.length] === 'U';
-        contract.direction    = contract.is_up ? 1 : -1;
-        contract.spread       = proposal.spread;
-        contract.decPlaces    = ((/^\d+(\.\d+)?$/).exec(history.prices[0])[1] || '-').length - 1;
-        contract.entry_level  = parseFloat(history.prices[0] * 1 + contract.direction * contract.spread / 2);
 
         spreadSetValues();
 
@@ -129,45 +101,39 @@ var ViewPopupWS = (function() {
             $Container = spreadMakeTemplate();
         }
 
-        $Container.find('#entry_level').text(contract.entry_level.toFixed(contract.decPlaces));
-        $Container.find('#per_point').text((contract.is_up ? '+' : '-') + contract.per_point);
+        $Container.find('#entry_level').text(contract.entry_level);
+        $Container.find('#per_point').text(contract.amount_per_point);
 
         spreadUpdate();
     };
 
     var spreadSetValues = function() {
-        contract.is_ended          = contract.is_expired || contract.is_sold;
-        contract.status            = text.localize(contract.is_ended ? 'Closed' : 'Open');
-        contract.profit            = parseFloat(contract.sell_price ? contract.sell_price : contract.bid_price) - parseFloat(contract.buy_price);
-        contract.profit_point      = contract.profit / contract.per_point;
-        contract.stop_loss_level   = contract.entry_level + contract.stop_loss   / (contract.is_point ? 1 : contract.per_point) * (- contract.direction);
-        contract.stop_profit_level = contract.entry_level + contract.stop_profit / (contract.is_point ? 1 : contract.per_point) * contract.direction;
+        contract.is_ended = contract.is_expired || contract.is_sold;
+        contract.status   = text.localize(contract.is_ended ? 'Closed' : 'Open');
     };
 
     var spreadUpdate = function() {
         spreadSetValues();
 
         containerSetText('status'           , contract.status, {'class': contract.is_ended ? 'loss' : 'profit'});
-        containerSetText('stop_loss_level'  , contract.stop_loss_level.toFixed(contract.decPlaces));
-        containerSetText('stop_profit_level', contract.stop_profit_level.toFixed(contract.decPlaces));
-        containerSetText('pl_value'         , contract.profit.toFixed(2), {'class': contract.profit >= 0 ? 'profit' : 'loss'});
-        containerSetText('pl_point'         , contract.profit_point.toFixed(2));
+        containerSetText('stop_loss_level'  , contract.stop_loss_level);
+        containerSetText('stop_profit_level', contract.stop_profit_level);
+        containerSetText('pl_value'         , parseFloat(contract.current_value_in_dollar).toFixed(2), {'class': contract.current_value_in_dollar*1 >= 0 ? 'profit' : 'loss'});
+        containerSetText('pl_point'         , parseFloat(contract.current_value_in_point).toFixed(2));
 
         if(!contract.is_ended) {
-            contract.sell_level = contract.entry_level + contract.profit_point * contract.direction;
-            containerSetText('sell_level', contract.sell_level.toFixed(contract.decPlaces));
+            containerSetText('sell_level', contract.current_level);
         }
         else {
-            spreadContractEnded(contract.profit >= 0);
+            spreadContractEnded(contract.current_value_in_dollar*1 >= 0);
         }
 
         sellSetVisibility(!isSellClicked && !contract.is_ended);
     };
 
     var spreadContractEnded = function(is_win) {
-        contract.exit_level = contract.entry_level + contract.profit_point * contract.direction;
         $Container.find('#sell_level').parent('tr').addClass(hiddenClass);
-        $Container.find('#exit_level').text(contract.exit_level.toFixed(contract.decPlaces)).parent('tr').removeClass(hiddenClass);
+        $Container.find('#exit_level').text(contract.exit_level).parent('tr').removeClass(hiddenClass);
         sellSetVisibility(false);
         // showWinLossStatus(is_win);
     };
@@ -270,10 +236,10 @@ var ViewPopupWS = (function() {
               Highchart.show_chart(contract);
             }
             if (candleForgotten && tickForgotten) {
-              Highchart.show_chart(contract, 'update');
-              if (contract.entry_tick_time) {
-                chartStarted = true;
-              }
+                Highchart.show_chart(contract, 'update');
+                if (contract.entry_tick_time) {
+                    chartStarted = true;
+                }
             }
         } else if (contract.tick_count && !chartUpdated) {
             WSTickDisplay.updateChart('', contract);
@@ -404,7 +370,7 @@ var ViewPopupWS = (function() {
         var longcode = toJapanTimeIfNeeded(contract.date_expiry, '', contract.longcode);
 
         $Container.prepend($('<div/>', {id: 'sell_bet_desc', class: 'popup_bet_desc drag-handle', text: longcode}));
-        var $sections = $('<div/>').append($('<div id="sell_details_chart_wrapper" class="grd-grid-8 grd-grid-mobile-12"></div><div id="sell_details_table" class="grd-grid-4 grd-grid-mobile-12"></div>'));
+        var $sections = $('<div/>').append($('<div class="gr-row container"><div id="sell_details_chart_wrapper" class="gr-8 gr-12-m"></div><div id="sell_details_table" class="gr-4 gr-12-m"></div></div>'));
 
         $sections.find('#sell_details_table').append($(
             '<table>' +
@@ -434,9 +400,9 @@ var ViewPopupWS = (function() {
             '<div id="trade_details_bottom"><div id="contract_sell_wrapper" class="' + hiddenClass + '"></div><div id="contract_sell_message"></div><div id="contract_win_status" class="' + hiddenClass + '"></div></div>'
         ));
 
-        $sections.find('#sell_details_chart_wrapper').html('<div id="live_chart_form_wrapper" class="grd-grid-12"></div>' +
+        $sections.find('#sell_details_chart_wrapper').html('<div id="live_chart_form_wrapper" class="gr-12"></div>' +
             '<div class="chart-notice"><div class="notice" id="delayed_feed_notice" style="display: none;">Charting for this underlying is delayed</div><div class="notice" id="not_available_notice" style="display: none;">Charting is not available for this underlying</div></div>' +
-            '<div id="' + (contract.tick_count ? 'tick_chart' : 'analysis_live_chart') + '" class="live_chart_wrapper grd-grid-12"></div>');
+            '<div id="' + (contract.tick_count ? 'tick_chart' : 'analysis_live_chart') + '" class="live_chart_wrapper gr-12"></div>');
 
         $Container.find('#' + wrapperID)
             .append($sections.html())
@@ -632,59 +598,6 @@ var ViewPopupWS = (function() {
         }
     };
 
-    // ----- Tick History -----
-    var getTickHistory = function(symbol, start, end, count, passthrough, granularity) {
-        var req = {"ticks_history": symbol, "start": start, "end": end, "count": count, passthrough: {}};
-        if(!start) {
-            delete(req['start']);
-        }
-        if(!count || count === 0) {
-            delete(req['count']);
-        }
-        if(passthrough && Object.keys(passthrough).length > 0) {
-            req.passthrough = passthrough;
-        }
-        req.passthrough.contract_id = contractID;
-        if(granularity > 0) {
-            req.style = 'candles';
-            req.granularity = granularity;
-        }
-        socketSend(req);
-    };
-
-    var responseHistory = function(response) {
-        if(response.hasOwnProperty('error')) {
-            // Sometimes when tick data or feed is not ready, the tick_history response returns with unclear error
-            showErrorPopup(response);
-            return;
-        }
-        if(response.echo_req.passthrough && response.echo_req.passthrough.contract_id != contractID) {
-            return;
-        }
-
-        switch(contractType) {
-            case 'spread':
-                history = response.history;
-                spreadShowContract();
-                break;
-        }
-    };
-
-    // ----- Proposal -----
-    var responseProposal = function(response) {
-        if(response.hasOwnProperty('error')) {
-            showErrorPopup(response);
-            return;
-        }
-        if(response.proposal.hasOwnProperty('id')) {
-            BinarySocket.send({"forget": response.proposal.id});
-        }
-        if(contractType === 'spread' && Object.keys(proposal).length === 0) {
-            proposal = response.proposal;
-            spreadShowContract();
-        }
-    };
-
     // ===== Dispatch =====
     var storeSubscriptionID = function(id, option) {
         if(!window.stream_ids && !option) {
@@ -716,14 +629,6 @@ var ViewPopupWS = (function() {
                         storeSubscriptionID(response.proposal_open_contract.id);
                         responseContract(response);
                     }
-                    break;
-                case 'history':
-                case 'candles':
-                case 'ticks_history':
-                    responseHistory(response);
-                    break;
-                case 'proposal':
-                    responseProposal(response);
                     break;
                 case 'sell':
                     responseSell(response);

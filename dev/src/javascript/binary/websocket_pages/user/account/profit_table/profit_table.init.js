@@ -1,14 +1,11 @@
-
 var ProfitTableWS = (function () {
-    var batchSize = 100;
-    var chunkSize = batchSize/2;
-
-    var transactionsReceived = 0;
-    var transactionsConsumed = 0;
-    var noMoreData = false;
-    var pending = false;
-
-    var currentBatch = [];
+    var batchSize,
+        chunkSize,
+        transactionsReceived,
+        transactionsConsumed,
+        noMoreData,
+        pending,
+        currentBatch;
 
     var tableExist = function(){
         return document.getElementById("profit-table");
@@ -24,7 +21,7 @@ var ProfitTableWS = (function () {
         transactionsReceived = 0;
         pending = false;
 
-        $(".error-msg").text("");
+        ProfitTableUI.errorMessage(null);
 
         if (tableExist()) {
             ProfitTableUI.cleanTableContent();
@@ -32,6 +29,10 @@ var ProfitTableWS = (function () {
     }
 
     function profitTableHandler(response){
+        if(response.hasOwnProperty('error')) {
+            ProfitTableUI.errorMessage(response.error.message);
+            return;
+        }
 
         pending = false;
         var profitTable = response.profit_table;
@@ -51,7 +52,7 @@ var ProfitTableWS = (function () {
                 $('#profit-table tbody')
                     .append($('<tr/>', {class: "flex-tr"})
                         .append($('<td/>', {colspan: 8})
-                            .append($('<p/>', {class: "notice-msg center", text: text.localize("Your account has no trading activity.")})
+                            .append($('<p/>', {class: "notice-msg center-text", text: text.localize("Your account has no trading activity.")})
                             )
                         )
                     );
@@ -103,6 +104,13 @@ var ProfitTableWS = (function () {
 
 
     function init(){
+        batchSize = 100;
+        chunkSize = batchSize/2;
+        transactionsReceived = 0;
+        transactionsConsumed = 0;
+        noMoreData = false;
+        pending = false;
+        currentBatch = [];
         getNextBatchTransactions();
         onScrollLoad();
     }
