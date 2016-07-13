@@ -80756,9 +80756,11 @@ WSTickDisplay.updateChart = function(data, contract) {
 
   var onLoad = function(){
     if(japanese_client() && /\/trading\.html/i.test(window.location.pathname)) {
+        alert('lol1');
         window.location.href = page.url.url_for('jptrading');
         return;
     } else if (!japanese_client() && /jp/.test(window.location.pathname)) {
+        alert('lol2');
         window.location.href = page.url.url_for('trading');
         return;
     }
