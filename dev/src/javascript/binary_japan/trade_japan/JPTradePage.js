@@ -5,6 +5,7 @@ var JPTradePage = (function() {
   var onLoad = function() {
     // trading_page = 1;
     JapanTrading.start();
+    Content.populate();
     TradingAnalysis.bindAnalysisTabEvent();
     $('#tab_portfolio a').text(text.localize('Portfolio'));
     $('#tab_graph a').text(text.localize('Chart'));
