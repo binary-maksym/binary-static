@@ -132,6 +132,13 @@ pjax_config_page('/(jp)?trading', function () {
     };
 });
 
+pjax_config_page('/jptrading', function () {
+    return {
+        onLoad: function(){JPTradePage.onLoad();},
+        onUnload: function(){JPTradePage.onUnload();}
+    };
+});
+
 pjax_config_page('/affiliate/signup', function() {
     return {
         onLoad: function() {
