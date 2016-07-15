@@ -49,7 +49,7 @@ var JPTradePage = (function() {
     onLoad: onLoad,
     reload: reload,
     onUnload: onUnload,
-    is_japan: function() {
+    isJapan: function() {
       return is_japan;
     }
   };

@@ -87812,7 +87812,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     onLoad: onLoad,
     reload: reload,
     onUnload: onUnload,
-    is_japan: function() {
+    isJapan: function() {
       return is_japan;
     }
   };
