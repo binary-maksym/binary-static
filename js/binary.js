@@ -75201,7 +75201,7 @@ var TradingAnalysis = (function() {
 
     var requestTradeAnalysis = function() {
         var contentId = document.getElementById('trading_bottom_content');
-        var formName = isJapanTrading() ? $('input[type="radio"][name="market_menu"]:checked').val() : $('#contract_form_name_nav').find('.a-active').attr('id');
+        var formName = JPTradePage.isJapan() ? $('#category-select').val() : $('#contract_form_name_nav').find('.a-active').attr('id');
         if (formName === 'matchdiff') {
           formName = 'digits';
         }
@@ -87763,10 +87763,10 @@ pjax_config_page_require_auth("user/portfoliows", function() {
 }());
 ;var JPTradePage = (function() {
 
-  // var trading_page = 0;
+  var isJapan = true;
 
   var onLoad = function() {
-    // trading_page = 1;
+    isJapan = true;
     JapanTrading.start();
     Content.populate();
     TradingAnalysis.bindAnalysisTabEvent();
@@ -87804,7 +87804,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   };
 
   var onUnload = function() {
-    // trading_page = 0;
+    isJapan = false;
     JapanTrading.stop();
   };
 
@@ -87812,8 +87812,9 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     onLoad: onLoad,
     reload: reload,
     onUnload: onUnload,
-    is_trading_page: function() {
-      return false; }
+    is_japan: function() {
+      return is_japan;
+    }
   };
 })();
 ;if (isJapanTrading()) {

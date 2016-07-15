@@ -1,9 +1,9 @@
 var JPTradePage = (function() {
 
-  // var trading_page = 0;
+  var isJapan = true;
 
   var onLoad = function() {
-    // trading_page = 1;
+    isJapan = true;
     JapanTrading.start();
     Content.populate();
     TradingAnalysis.bindAnalysisTabEvent();
@@ -41,7 +41,7 @@ var JPTradePage = (function() {
   };
 
   var onUnload = function() {
-    // trading_page = 0;
+    isJapan = false;
     JapanTrading.stop();
   };
 
@@ -49,7 +49,8 @@ var JPTradePage = (function() {
     onLoad: onLoad,
     reload: reload,
     onUnload: onUnload,
-    is_trading_page: function() {
-      return false; }
+    is_japan: function() {
+      return is_japan;
+    }
   };
 })();
