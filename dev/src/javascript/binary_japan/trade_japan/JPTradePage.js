@@ -50,7 +50,7 @@ var JPTradePage = (function() {
     reload: reload,
     onUnload: onUnload,
     isJapan: function() {
-      return is_japan;
+      return isJapan;
     }
   };
 })();
