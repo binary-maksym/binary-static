@@ -73382,7 +73382,7 @@ pjax_config_page('\/login|\/loginid_switch', function() {
     };
 });
 
-pjax_config_page('/(jp)?trading', function () {
+pjax_config_page('/trading', function () {
     return {
         onLoad: function(){TradePage.onLoad();},
         onUnload: function(){TradePage.onUnload();}
