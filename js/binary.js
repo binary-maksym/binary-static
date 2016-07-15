@@ -87761,7 +87761,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
         createKnowledgeTestLink: createKnowledgeTestLink,
     };
 }());
-;var TradePage = (function() {
+;var JPTradePage = (function() {
 
   // var trading_page = 0;
 

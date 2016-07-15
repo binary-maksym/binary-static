@@ -1,4 +1,4 @@
-var TradePage = (function() {
+var JPTradePage = (function() {
 
   // var trading_page = 0;
 
