@@ -87770,6 +87770,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     isJapan = true;
     
     $(function(){
+      console.log('on ready');
       JapanTrading.start();
       documentReady = true;
     });
