@@ -86809,6 +86809,7 @@ pjax_config_page("profit_tablews|statementws|portfoliows|trading", function() {
 });
 ;var ViewBalance = (function () {
     function init(){
+        console.log('tata');
         BinarySocket.init(1);
     }
 
