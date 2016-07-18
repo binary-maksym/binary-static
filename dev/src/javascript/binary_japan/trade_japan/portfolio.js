@@ -23,7 +23,7 @@ var JapanPortfolio = (function() {
 
   function show() {
     if (JPTradePage.isJapan()) {
-      PortfolioWS.init();
+      PortfolioWS.onLoad();
     }
 
     return;

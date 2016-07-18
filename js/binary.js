@@ -71671,7 +71671,6 @@ function isValidDate(day, month, year){
 function handle_residence_state_ws(){
   BinarySocket.init({
     onmessage: function(msg){
-      console.log('lola');
       var select;
       var response = JSON.parse(msg.data);
       if (response) {
@@ -86809,7 +86808,6 @@ pjax_config_page("profit_tablews|statementws|portfoliows|trading", function() {
 });
 ;var ViewBalance = (function () {
     function init(){
-        console.log('tata');
         BinarySocket.init(1);
     }
 
@@ -88370,7 +88368,7 @@ pjax_config_page_require_auth("jptrading", function() {
 
   function show() {
     if (JPTradePage.isJapan()) {
-      PortfolioWS.init();
+      PortfolioWS.onLoad();
     }
 
     return;
