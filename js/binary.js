@@ -79107,7 +79107,7 @@ var Message = (function () {
 
     var process = function (msg) {
         var response = JSON.parse(msg.data);
-        if(!TradePage.is_trading_page() || !JPTradePage.isJapan()){
+        if(!(TradePage.is_trading_page() || JPTradePage.isJapan())){
             forgetTradingStreams();
             return;
         }
