@@ -87764,10 +87764,20 @@ pjax_config_page_require_auth("user/portfoliows", function() {
 ;var JPTradePage = (function() {
 
   var isJapan = true;
+  var documentReady = false;
 
   var onLoad = function() {
     isJapan = true;
-    JapanTrading.start();
+    
+    $(function(){
+      JapanTrading.start();
+      documentReady = true;
+    });
+
+    if(documentReady){
+      JapanTrading.start();
+    }
+
     Content.populate();
     TradingAnalysis.bindAnalysisTabEvent();
     $('#tab_portfolio a').text(text.localize('Portfolio'));
