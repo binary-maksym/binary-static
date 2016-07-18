@@ -75,14 +75,14 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     };
 });
 
-pjax_config_page_require_auth("jptrading", function() {
-    console.log('jaja');
-    return {
-        onLoad: function() {
-            PortfolioWS.onLoad();
-        },
-        onUnload: function() {
-            PortfolioWS.onUnload();
-        },
-    };
-});
+// pjax_config_page_require_auth("jptrading", function() {
+//     console.log('jaja');
+//     return {
+//         onLoad: function() {
+//             PortfolioWS.onLoad();
+//         },
+//         onUnload: function() {
+//             PortfolioWS.onUnload();
+//         },
+//     };
+// });
