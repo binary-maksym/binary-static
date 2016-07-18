@@ -7,7 +7,6 @@ var JPTradePage = (function() {
     isJapan = true;
     
     $(function(){
-      console.log('on ready');
       JapanTrading.start();
       documentReady = true;
     });

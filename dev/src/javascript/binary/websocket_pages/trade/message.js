@@ -7,12 +7,10 @@ var Message = (function () {
 
     var process = function (msg) {
         var response = JSON.parse(msg.data);
-        console.log('hello');
-        if(!(TradePage.is_trading_page() || JPTradePage.isJapan())){
+        if(!TradePage.is_trading_page()){
             forgetTradingStreams();
             return;
         }
-        console.log('world');
         if (response) {
             var type = response.msg_type;
             if (type === 'active_symbols') {

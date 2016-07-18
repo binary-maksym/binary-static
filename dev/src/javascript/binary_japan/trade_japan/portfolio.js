@@ -5,9 +5,7 @@ var JapanPortfolio = (function() {
 
   function init() {
 
-    console.log('2');
     if (isActive()) {
-      console.log('1');
       $('#tab_portfolio').removeClass('invisible');
     }
 
