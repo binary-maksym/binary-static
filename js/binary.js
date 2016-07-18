@@ -77421,10 +77421,6 @@ function setChartSource() {
   document.getElementById('chart_frame').src = 'https://webtrader.binary.com?affiliates=true&instrument=' + document.getElementById('underlying').value + '&timePeriod=' + document.getElementById('time_period').value + '&gtm=true&lang=' + (page.language() || 'en').toLowerCase();
 }
 
-function isJapanTrading(){
-    return $('#trading_socket_container.japan').length;
-}
-
 //used temporarily for mocha test
 if (typeof module !== 'undefined') {
     module.exports = {
@@ -77560,22 +77556,6 @@ if (typeof module !== 'undefined') {
             textUnavailableReal: text.localize('Sorry, account opening is unavailable.'),
             textMessageMinRequired: text.localize('Minimum of [_1] characters required.'),
             textFeatureUnavailable: text.localize('Sorry, this feature is not available.'),
-            textExercisePrice: text.localize('Exercise price'),
-            textPrices: text.localize('Prices'),
-            textLots: text.localize('Lots'),
-            textBuy: text.localize('Buy'),
-            textSell: text.localize('Sell'),
-            textCALLE: text.localize('[_1] [_2] payout if [_3] is strictly higher or equal than Exercise price at close  on [_4].'),
-            textPUT: text.localize('[_1] [_2] payout if [_3] is strictly lower than Exercise price at close on [_4].'),
-            textNOTOUCH: text.localize('[_1] [_2] payout if [_3] does not touch Exercise price through close on [_4].'),
-            textONETOUCH: text.localize('[_1] [_2] payout if [_3] touches Exercise price through close on [_4].'),
-            textEXPIRYRANGEE: text.localize('[_1] [_2] payout if [_3] ends on or between low and high values of Exercise price at close on [_4].'),
-            textEXPIRYMISS: text.localize('[_1] [_2] payout if [_3] ends otside low and high values of Exercise price at close on [_4].'),
-            textRANGE: text.localize('[_1] [_2] payout if [_3] stays between low and high values of Exercise price through close on [_4].'),
-            textUPORDOWN: text.localize('[_1] [_2] payout if [_3] goes ouside of low and high values of Exercise price through close on [_4].'),
-            textBuyPriceUnit: text.localize('BUY price per unit'),
-            textSellPriceUnit: text.localize('SELL price  per unit'),
-            textUnits: text.localize('Units'),
             textMessagePasswordScore: text.localize( 'Password score is: [_1]. Passing score is: 20.'),
             textShouldNotLessThan: text.localize('Please enter a number greater or equal to [_1].'),
             textNumberLimit: text.localize('Please enter a number between [_1].')       // [_1] should be a range
@@ -77636,16 +77616,6 @@ if (typeof module !== 'undefined') {
         var payoutOption = document.getElementById('payout_option');
         if (payoutOption) {
             payoutOption.textContent = localize.textPayout;
-        }
-
-        var japanUnit = document.getElementById('japan_unit_label');
-        if (japanUnit) {
-            japanUnit.textContent = localize.textUnits;
-        }
-
-        var japanPayout = document.getElementById('japan_payout_label');
-        if (japanPayout) {
-            japanPayout.textContent = localize.textPayout;
         }
 
         var stakeOption = document.getElementById('stake_option');
@@ -78656,11 +78626,6 @@ var TradingEvents = (function () {
                     displayTooltip(Defaults.get('market'), underlying);
                 }
             });
-            if (isJapanTrading()) {
-              underlyingElement.addEventListener('mousedown', function(e) {
-                Symbols.getSymbols(0);
-              });
-            }
         }
 
         /*
@@ -78991,70 +78956,6 @@ var TradingEvents = (function () {
             return (value % 1 !== 0 && ((+parseFloat(value)).toFixed(10)).replace(/^-?\d*\.?|0+$/g, '').length>2);
         });
 
-        var jhighBarrierElement = document.getElementById('jbarrier_high');
-        if (jhighBarrierElement) {
-            jhighBarrierElement.addEventListener('change', function (e) {
-                processPriceRequest();
-            });
-        }
-
-
-        var jlowBarrierElement = document.getElementById('jbarrier_low');
-        if (jlowBarrierElement) {
-            jlowBarrierElement.addEventListener('change', function (e) {
-                var options = jhighBarrierElement.getElementsByTagName('option');
-                var f = 0;
-                if(jhighBarrierElement.value > jlowBarrierElement.value){
-                    f = 1;
-                }
-                for(var i=0; i<options.length; i++){
-                    option = options[i];
-
-                    if(option.value <= jlowBarrierElement.value){
-                        option.setAttribute('disabled', true);
-                    }
-                else{
-                    if(!f){
-                        jhighBarrierElement.value = option.value;
-                        f=1;
-                    }
-                    option.removeAttribute('disabled');
-                }
-                }
-                processPriceRequest();
-            });
-        }
-
-        var jbarrierElement = document.getElementById('jbarrier');
-        if (jbarrierElement) {
-            jbarrierElement.addEventListener('change', function (e) {
-                processPriceRequest();
-            });
-        }
-
-        var period = document.getElementById('period');
-        if(period){
-            period.addEventListener('change', function (e) {
-                Periods.displayBarriers();
-                processPricingTableRequest();
-                // processPriceRequest();
-                var japan_info = TradingAnalysis.japan_info();
-                if(japan_info && TradingAnalysis.getActiveTab() === 'tab_japan_info'){
-                    japan_info.show();
-                }
-            });
-        }
-
-        if(isJapanTrading()){
-            var amount_type = document.getElementById('amount_type');
-            var options = amount_type.getElementsByTagName('option');
-            for(var d=0; d<options.length; d++){
-                if(options[d].value!='payout'){
-                    options[d].setAttribute('disabled', true);
-                }
-            }
-        }
-
         var init_logo = document.getElementById('trading_init_progress');
         if(init_logo){
             init_logo.addEventListener('click', debounce( function (e) {
@@ -79069,15 +78970,6 @@ var TradingEvents = (function () {
                 load_with_pjax(url);
             }));
         }
-
-        var $japanUnit = $('#japan_unit');
-        var japanState = PricingTable.getState();
-        $japanUnit.change(function(e){
-            var value = Math.abs(parseInt(e.target.value, 10)) || 1;
-            japanState.units = value;
-            $('#japan_payout').text('¥'+ parseInt(value)*1000);
-            processPricingTableRequest();
-        });
 
         /*
          * attach datepicker and timepicker to end time durations
@@ -79125,9 +79017,6 @@ var Message = (function () {
             } else if (type === 'proposal') {
                 processProposal(response);
             } else if (type === 'buy') {
-                if(isJapanTrading()){
-                    PricingTable.processBuy(response);
-                }
                 Purchase.display(response);
                 GTM.push_purchase_data(response);
             } else if (type === 'tick') {
@@ -80224,9 +80113,6 @@ var Symbols = (function () {
         var $args = {
             active_symbols: "brief"
         };
-        if (isJapanTrading()) {
-            $args['landing_company'] = "japan";
-        }
         BinarySocket.send($args);
         need_page_update = update;
     };
@@ -80806,7 +80692,6 @@ WSTickDisplay.updateChart = function(data, contract) {
     $('#tab_graph a').text(text.localize('Chart'));
     $('#tab_explanation a').text(text.localize('Explanation'));
     $('#tab_last_digit a').text(text.localize('Last Digit Stats'));
-    $('#tab_japan_info a').text(text.localize('Prices'));
     handleChart();
   };
 
