@@ -142,7 +142,7 @@ var TradingAnalysis = (function() {
      * get the current active tab if its visible i.e allowed for current parameters
      */
     var getActiveTab = function() {
-        var selectedTab = sessionStorage.getItem('currentAnalysisTab') || (isJapanTrading() ? 'tab_portfolio' : window.chartAllowed ? 'tab_graph' : 'tab_explanation'),
+        var selectedTab = sessionStorage.getItem('currentAnalysisTab') || (JPTradePage.isJapan() ? 'tab_portfolio' : window.chartAllowed ? 'tab_graph' : 'tab_explanation'),
             selectedElement = document.getElementById(selectedTab);
 
         if (selectedElement && selectedElement.classList.contains('invisible') &&
