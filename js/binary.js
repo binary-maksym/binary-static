@@ -88346,6 +88346,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
 ;var JapanPortfolio = (function() {
 
   var $portfolio;
+  var isPortfolioActive = false;
 
   function init() {
 
@@ -88367,8 +88368,9 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   }
 
   function show() {
-    if (JPTradePage.isJapan()) {
+    if (JPTradePage.isJapan() && !isPortfolioActive) {
       PortfolioWS.onLoad();
+      isPortfolioActive = true;
     }
 
     return;
@@ -88382,8 +88384,9 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   }
 
   function hide() {
-    if (JPTradePage.isJapan()) {
+    if (JPTradePage.isJapan() && isPortfolioActive) {
       PortfolioWS.onUnload();
+      isPortfolioActive = false;
     }
 
     return;

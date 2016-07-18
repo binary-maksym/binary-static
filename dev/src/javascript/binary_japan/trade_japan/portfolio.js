@@ -1,6 +1,7 @@
 var JapanPortfolio = (function() {
 
   var $portfolio;
+  var isPortfolioActive = false;
 
   function init() {
 
@@ -22,8 +23,9 @@ var JapanPortfolio = (function() {
   }
 
   function show() {
-    if (JPTradePage.isJapan()) {
+    if (JPTradePage.isJapan() && !isPortfolioActive) {
       PortfolioWS.onLoad();
+      isPortfolioActive = true;
     }
 
     return;
@@ -37,8 +39,9 @@ var JapanPortfolio = (function() {
   }
 
   function hide() {
-    if (JPTradePage.isJapan()) {
+    if (JPTradePage.isJapan() && isPortfolioActive) {
       PortfolioWS.onUnload();
+      isPortfolioActive = false;
     }
 
     return;
