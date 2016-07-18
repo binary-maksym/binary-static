@@ -88335,7 +88335,9 @@ pjax_config_page_require_auth("user/portfoliows", function() {
 
   function init() {
 
+    console.log('2');
     if (isActive()) {
+      console.log('1');
       $('#tab_portfolio').removeClass('invisible');
     }
 
@@ -88351,7 +88353,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   }
 
   function show() {
-    if (isJapanTrading()) {
+    if (JPTradePage.isJapan()) {
       PortfolioWS.init();
     }
 
@@ -88360,13 +88362,13 @@ pjax_config_page_require_auth("user/portfoliows", function() {
 
   function isActive() {
     var user = new User();
-    if (user.email && isJapanTrading()) {
+    if (user.email && JPTradePage.isJapan()) {
       return true;
     }
   }
 
   function hide() {
-    if (isJapanTrading()) {
+    if (JPTradePage.isJapan()) {
       PortfolioWS.onUnload();
     }
 
