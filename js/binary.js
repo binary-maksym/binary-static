@@ -71671,6 +71671,7 @@ function isValidDate(day, month, year){
 function handle_residence_state_ws(){
   BinarySocket.init({
     onmessage: function(msg){
+      console.log('lola');
       var select;
       var response = JSON.parse(msg.data);
       if (response) {
