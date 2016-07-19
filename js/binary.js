@@ -87675,8 +87675,9 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     if(documentReady){
       JapanTrading.start();
     }
-    
+
     Content.populate();
+    TradingAnalysis.bindAnalysisTabEvent();
     $('#tab_portfolio a').text(text.localize('Portfolio'));
     $('#tab_graph a').text(text.localize('Chart'));
     $('#tab_explanation a').text(text.localize('Explanation'));
