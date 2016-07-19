@@ -87665,6 +87665,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   var scriptUrl = 'https://binary-com.github.io/japanui/dist/bundle.js';
   var isJapan = true;
   var documentReady = false;
+  var scriptReady = false;
 
   var onLoad = function() {
     isJapan = true;
@@ -87708,7 +87709,14 @@ pjax_config_page_require_auth("user/portfoliows", function() {
       url: scriptUrl
     };
 
-    $.ajax(options).done(cb);
+    if(!scriptReady){
+      $.ajax(options).done(function(){
+        scriptReady = true;
+        cb();
+      });
+    } else {
+      cb();
+    }
   }
 
   return {
