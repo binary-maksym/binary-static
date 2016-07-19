@@ -80763,7 +80763,6 @@ WSTickDisplay.updateChart = function(data, contract) {
     $('#tab_graph a').text(text.localize('Chart'));
     $('#tab_explanation a').text(text.localize('Explanation'));
     $('#tab_last_digit a').text(text.localize('Last Digit Stats'));
-    $('#tab_japan_info a').text(text.localize('Prices'));
   };
 
   var reload = function() {
@@ -87676,8 +87675,11 @@ pjax_config_page_require_auth("user/portfoliows", function() {
     if(documentReady){
       JapanTrading.start();
     }
-
+    
     Content.populate();
+    $('#tab_portfolio a').text(text.localize('Portfolio'));
+    $('#tab_graph a').text(text.localize('Chart'));
+    $('#tab_explanation a').text(text.localize('Explanation'));
   };
 
   var reload = function() {
