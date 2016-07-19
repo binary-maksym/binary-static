@@ -69,13 +69,8 @@ var TradingAnalysis = (function() {
         toggleActiveNavMenuElement(analysisNavElement, currentLink.parentElement);
         toggleActiveAnalysisTabs();
 
-        tab_japan_info = new JapanInfo();
-        JapanPortfolio.init();
-
         if(currentTab === 'tab_portfolio'){
             JapanPortfolio.show();
-        } else if (currentTab === 'tab_japan_info') {
-            tab_japan_info.show();
         } else {
             JapanPortfolio.hide();
             tab_japan_info.hide();
