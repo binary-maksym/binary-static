@@ -8,18 +8,18 @@ var JPTradePage = (function() {
   var onLoad = function() {
     isJapan = true;
 
-    $(function() {
-      getScript(function() {
-        JapanTrading.start();
-        documentReady = true;
-      });
-    });
+    // $(function() {
+    //   getScript(function() {
+    //     JapanTrading.start();
+    //     documentReady = true;
+    //   });
+    // });
 
-    if (documentReady) {
+    // if (documentReady) {
       getScript(function() {
         JapanTrading.start();
       });
-    }
+    // }
 
     Content.populate();
     TradingAnalysis.bindAnalysisTabEvent();
