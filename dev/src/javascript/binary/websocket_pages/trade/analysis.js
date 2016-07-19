@@ -11,7 +11,7 @@
  */
 
 var TradingAnalysis = (function() {
-    var trading_digit_info, tab_japan_info;
+    var trading_digit_info;
 
     var requestTradeAnalysis = function() {
         var contentId = document.getElementById('trading_bottom_content');
@@ -73,7 +73,6 @@ var TradingAnalysis = (function() {
             JapanPortfolio.show();
         } else {
             JapanPortfolio.hide();
-            tab_japan_info.hide();
             if (currentTab === 'tab_graph') {
               showHighchart();
             } else {
@@ -224,9 +223,6 @@ var TradingAnalysis = (function() {
         // Should be removed with legacy trading.
         set_digit_info: function(obj) {
             trading_digit_info = obj;
-        },
-        japan_info: function() {
-            return tab_japan_info;
         },
         tab_portfolio: function() {
             return tab_portfolio;
