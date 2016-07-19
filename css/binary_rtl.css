@@ -629,6 +629,7 @@ button.blue-button:hover {
 }
 #header #menu-top {
   text-align: center;
+  white-space: nowrap;
 }
 #header #menu-top a:hover {
   opacity: 0.75;
@@ -638,6 +639,7 @@ button.blue-button:hover {
   display: inline-block;
   text-align: center;
   margin: 0;
+  white-space: normal;
 }
 #header #menu-top li:last-child {
   background: none;
@@ -3846,16 +3848,6 @@ iframe#chart_frame {
   /* stylelint-disable-line declaration-block-no-duplicate-properties */
 }
 
-tr#highchart_duration td {
-  padding-top: 0;
-}
-tr#highchart_duration td:nth-child(1) {
-  text-align: left;
-}
-tr#highchart_duration td:nth-child(2) {
-  text-align: right;
-}
-
 #knowledge-test-msg {
   white-space: pre-line;
 }
@@ -3964,9 +3956,6 @@ body.JA .ja-no-padding {
 body.JA .regulatory-logo {
   display: none !important;
 }
-body.JA #header #menu-top li a.smaller-font, body.JA #header ul#menu-top.smaller-font {
-  font-size: 90%;
-}
 body.JA #asset-forex div.table-header:nth-of-type(n + 3), body.JA #asset-forex div.table-body:nth-of-type(n + 15) {
   display: none !important;
 }
@@ -3990,15 +3979,6 @@ body.VI #legal-tab li.tm-li-2 {
 }
 body.VI #trading_socket_container #contract_form_name_nav {
   font-size: 80%;
-}
-body.VI #header #menu-top li a.smaller-font, body.VI #header ul#menu-top.smaller-font {
-  font-size: 90%;
-}
-
-@media screen and (max-width: 768px) {
-  body.VI #header #menu-top li a.smaller-font, body.VI #header ul#menu-top.smaller-font, body.JA #header #menu-top li a.smaller-font, body.JA #header ul#menu-top.smaller-font {
-    font-size: 75%;
-  }
 }
 
 /*French Language */
@@ -4089,6 +4069,11 @@ body.PT h1, body.PT h2, body.PT h3, body.PT h4, body.PT h5, body.PT h6, body.RU 
 }
 
 /* media queries */
+@media screen and (max-width: 959px) {
+  #header ul#menu-top.smaller-font a {
+    font-size: 85%;
+  }
+}
 @media screen and (max-width: 768px) {
   #page-wrapper #content .page-section > .tab-menu ul.tm-ul li.active a {
     background: none;
@@ -4107,10 +4092,6 @@ body.PT h1, body.PT h2, body.PT h3, body.PT h4, body.PT h5, body.PT h6, body.RU 
 
   #footer-regulatory #social-networks {
     text-align: center;
-  }
-
-  #header #menu-top li a.smaller-font, #header ul#menu-top.smaller-font {
-    font-size: 80%;
   }
 
   .flex-table-container {
