@@ -1,18 +1,23 @@
 var JPTradePage = (function() {
 
+  var scriptUrl = 'https://binary-com.github.io/japanui/dist/bundle.js';
   var isJapan = true;
   var documentReady = false;
 
   var onLoad = function() {
     isJapan = true;
-    
-    $(function(){
-      JapanTrading.start();
-      documentReady = true;
+
+    $(function() {
+      getScript(function() {
+        JapanTrading.start();
+        documentReady = true;
+      });
     });
 
-    if(documentReady){
-      JapanTrading.start();
+    if (documentReady) {
+      getScript(function() {
+        JapanTrading.start();
+      });
     }
 
     Content.populate();
@@ -33,6 +38,16 @@ var JPTradePage = (function() {
     isJapan = false;
     JapanTrading.stop();
   };
+
+  function getScript(cb) {
+    var options = {
+      dataType: 'script',
+      cache: true,
+      url: scriptUrl
+    };
+
+    $.ajax(options).done(cb);
+  }
 
   return {
     onLoad: onLoad,
