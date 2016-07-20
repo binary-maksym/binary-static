@@ -81505,6 +81505,7 @@ pjax_config_page_require_auth("user/change_password", function() {
     var onUnload = function() {
         BinarySocket.send({"forget_all": "proposal_open_contract"});
         BinarySocket.send({"forget_all": "transaction"});
+        $('#portfolio-body').empty();
     };
 
     return {
