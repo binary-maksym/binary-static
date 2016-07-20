@@ -87678,6 +87678,7 @@ pjax_config_page_require_auth("user/portfoliows", function() {
   };
 
   var onLoad = function() {
+    console.log('hi');
     isJapan = true;
 
     getScript(function() { JapanTrading.start(); });

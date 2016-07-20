@@ -18,6 +18,7 @@ var JPTradePage = (function() {
   };
 
   var onLoad = function() {
+    console.log('hi');
     isJapan = true;
 
     getScript(function() { JapanTrading.start(); });
