@@ -83,7 +83,8 @@ var KnowledgeTestUI = (function () {
         var $resultTable = $('<table></table>', { class: 'kv-pairs'});
         var $scoreRow = $('<tr></tr>').append($('<td>' + text.localize('Score') + '</td>')).append($('<td>'+ score + '</td>'));
 
-        var submitDate = (new Date(time)).toUTCString();
+        var date = new moment();
+        var submitDate = mmoment.utc(date).format('YYYY') + text.localize('Year') + moment.utc(date).format('MM') + text.localize('Month') + moment.utc(date).format('DD') + text.localize('Day') + ' (' + text.localize('Weekday') + ')';
 
         var $dateRow = $('<tr></tr>').append($('<td>' + text.localize('Date') + '</td>')).append($('<td>'+ submitDate + '</td>'));
 
@@ -105,14 +106,10 @@ var KnowledgeTestUI = (function () {
             return;         // topbar not exist, do nothing
         }
 
-        var $knowledgeTestLink = $('<a></a>', {
-            class: 'pjaxload',
-            id: 'knowledgetest-link',
-            href: '/new_account/knowledge_testws'
-        }).text(text.localize('{JAPAN ONLY}Take knowledge test'));
-
-        $topbarmsg.children('a').addClass('invisible');
-        $topbarmsg.append($knowledgeTestLink);
+        $topbarmsg.find('> span').removeClass('invisible');
+        $topbarmsg.removeClass('invisible')
+            .find('a').removeClass('invisible')
+                .attr('href', page.url.url_for('/new_account/knowledge_testws')).html($('<span/>', {text: text.localize('{JAPAN ONLY}Take knowledge test')}));
     }
 
     return {
@@ -124,4 +121,3 @@ var KnowledgeTestUI = (function () {
         createKnowledgeTestLink: createKnowledgeTestLink,
     };
 }());
-

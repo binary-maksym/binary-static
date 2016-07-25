@@ -4,6 +4,13 @@ var clock_started = false;
 var GTM = (function() {
     "use strict";
 
+    var gtm_applicable = function() {
+      if (getAppId() === '1' && getSocketURL() === 'wss://ws.binaryws.com/websockets/v3') {
+        return true;
+      }
+      return false;
+    };
+
     var gtm_data_layer_info = function(data) {
         var data_layer_info = {
             language  : page.language(),
@@ -13,7 +20,7 @@ var GTM = (function() {
             event     : 'page_load',
         };
         if(page.client.is_logged_in) {
-            data_layer_info['visitorID'] = page.client.loginid;
+            data_layer_info['visitorId'] = page.client.loginid;
         }
 
         $.extend(true, data_layer_info, data);
@@ -28,6 +35,7 @@ var GTM = (function() {
     };
 
     var push_data_layer = function(data) {
+        if (!gtm_applicable()) return;
         if(!(/logged_inws/i).test(window.location.pathname)) {
             var info = gtm_data_layer_info(data && typeof(data) === 'object' ? data : null);
             dataLayer[0] = info.data;
@@ -42,6 +50,7 @@ var GTM = (function() {
     };
 
     var event_handler = function(get_settings) {
+        if (!gtm_applicable()) return;
         var is_login      = localStorage.getItem('GTM_login')      === '1',
             is_newaccount = localStorage.getItem('GTM_newaccount') === '1';
         if(!is_login && !is_newaccount) {
@@ -57,7 +66,7 @@ var GTM = (function() {
         }
 
         var data = {
-            'visitorID'   : page.client.loginid,
+            'visitorId'   : page.client.loginid,
             'bom_country' : get_settings.country,
             'bom_email'   : get_settings.email,
             'url'         : window.location.href,
@@ -76,17 +85,73 @@ var GTM = (function() {
         GTM.push_data_layer(data);
     };
 
+    var push_purchase_data = function(response) {
+        if (!gtm_applicable() || page.client.is_virtual()) return;
+        var req = response.echo_req.passthrough,
+            buy = response.buy;
+        if (!buy) return;
+        var data = {
+            'event'              : 'buy_contract',
+            'visitorId'          : page.client.loginid,
+            'bom_symbol'         : req.symbol,
+            'bom_market'         : markets && markets.by_symbol(req.symbol) ?
+                markets.by_symbol(req.symbol).market.name :
+                document.getElementById('contract_markets').value,
+            'bom_currency'       : req.currency,
+            'bom_contract_type'  : req.contract_type,
+            'bom_contract_id'    : buy.contract_id,
+            'bom_transaction_id' : buy.transaction_id,
+            'bom_buy_price'      : buy.buy_price,
+            'bom_payout'         : buy.payout,
+        };
+        // Spread contracts
+        if (/spread/i.test(req.contract_type)) {
+            $.extend(data, {
+                'bom_stop_type'         : req.stop_type,
+                'bom_amount_per_point'  : buy.amount_per_point,
+                'bom_stop_loss_level'   : buy.stop_loss_level,
+                'bom_stop_profit_level' : buy.stop_profit_level,
+            });
+        } else {
+            $.extend(data, {
+                'bom_amount'      : req.amount,
+                'bom_basis'       : req.basis,
+                'bom_expiry_type' : document.getElementById('expiry_type').value,
+            });
+            if(data.bom_expiry_type === 'duration') {
+                $.extend(data, {
+                    'bom_duration'      : req.duration,
+                    'bom_duration_unit' : req.duration_unit,
+                });
+            }
+            if(isVisible(document.getElementById('barrier'))) {
+                data['bom_barrier'] = req.barrier;
+            } else if(isVisible(document.getElementById('barrier_high'))) {
+                data['bom_barrier_high'] = req.barrier;
+                data['bom_barrier_low']  = req.barrier2;
+            }
+            if(isVisible(document.getElementById('prediction'))) {
+                data['bom_prediction']  = req.barrier;
+            }
+        }
+
+        GTM.push_data_layer(data);
+    };
+
     var set_login_flag = function() {
+        if (!gtm_applicable()) return;
         localStorage.setItem('GTM_login', '1');
     };
 
     var set_newaccount_flag = function() {
+        if (!gtm_applicable()) return;
         localStorage.setItem('GTM_newaccount', '1');
     };
 
     return {
         push_data_layer     : push_data_layer,
         event_handler       : event_handler,
+        push_purchase_data  : push_purchase_data,
         set_login_flag      : set_login_flag,
         set_newaccount_flag : set_newaccount_flag,
     };
@@ -97,7 +162,7 @@ var User = function() {
     this.email   =  $.cookie('email');
     var loginid_list = $.cookie('loginid_list');
 
-    if(!this.loginid || !loginid_list) {
+    if(!this.loginid || !loginid_list || !localStorage.getItem('client.tokens')) {
         this.is_logged_in = false;
     } else {
         this.is_logged_in = true;
@@ -135,14 +200,14 @@ var User = function() {
 var Client = function() {
     this.loginid      =  $.cookie('loginid');
     this.residence    =  $.cookie('residence');
-    this.is_logged_in = this.loginid && this.loginid.length > 0;
+    this.is_logged_in = this.loginid && this.loginid.length > 0 && localStorage.getItem('client.tokens');
 };
 
 Client.prototype = {
     show_login_if_logout: function(shouldReplacePageContents) {
         if(!this.is_logged_in) {
             if(shouldReplacePageContents) {
-                $('#content > .grd-container').addClass('center').empty()
+                $('#content > .container').addClass('center-text').empty()
                     .append($('<p/>', {class: 'notice-msg', html: text.localize('Please [_1] to view this page')
                         .replace('[_1]', '<a class="login_link" href="javascript:;">' + text.localize('login') + '</a>')}));
                 $('.login_link').click(function(){Login.redirect_to_login();});
@@ -463,7 +528,7 @@ URL.prototype = {
         return params;
     },
     default_redirect_url: function() {
-        return this.url_for(page.language() === 'JA' ? 'jptrading' : 'trading');
+        return this.url_for(japanese_client() ? 'jptrading' : 'trading');
     },
 };
 
@@ -482,14 +547,14 @@ Menu.prototype = {
         this.hide_main_menu();
 
         var active = this.active_menu_top();
-        var trading = $('#menu-top li:eq(4)');
+        var trading = japanese_client() ? $('#main-navigation-jptrading') : $('#main-navigation-trading');
         if(active) {
             active.addClass('active');
             if(trading.is(active)) {
                 this.show_main_menu();
             }
         } else {
-            var is_mojo_page = /^\/$|\/login|\/home|\/ad|\/open-source-projects|\/bulk-trader-facility|\/partners|\/payment-agent|\/about-us|\/group-information|\/group-history|\/careers|\/contact|\/terms-and-conditions|\/terms-and-conditions-jp|\/responsible-trading|\/us_patents|\/lost_password|\/realws|\/virtualws|\/open-positions|\/job-details|\/user-testing|\/japanws|\/maltainvestws|\/reset_passwordws|\/supported-browsers$/.test(window.location.pathname);
+            var is_mojo_page = /^\/$|\/login|\/home|\/ad|\/open-source-projects|\/partners|\/payment-agent|\/about-us|\/group-information|\/group-history|\/careers|\/contact|\/terms-and-conditions|\/terms-and-conditions-jp|\/responsible-trading|\/us_patents|\/lost_password|\/realws|\/virtualws|\/open-positions|\/job-details|\/user-testing|\/japanws|\/maltainvestws|\/reset_passwordws|\/supported-browsers$/.test(window.location.pathname);
             if(!is_mojo_page) {
                 trading.addClass('active');
                 this.show_main_menu();
@@ -652,6 +717,9 @@ Header.prototype = {
         if (!$('body').hasClass('BlueTopBack')) {
           checkClientsCountry();
         }
+        if(page.client.is_logged_in) {
+            $('ul#menu-top').addClass('smaller-font');
+        }
     },
     on_unload: function() {
         this.menu.reset();
@@ -751,8 +819,14 @@ Header.prototype = {
         that.server_time_at_response = ((start_timestamp * 1000) + (that.client_time_at_response - pass));
         var update_time = function() {
             window.time = moment(that.server_time_at_response + moment().valueOf() - that.client_time_at_response).utc();
-            clock.html(window.time.format("YYYY-MM-DD HH:mm") + ' GMT');
-            showLocalTimeOnHover('#gmt-clock');
+            var curr = localStorage.getItem('client.currencies');
+            var timeStr = window.time.format("YYYY-MM-DD HH:mm") + ' GMT';
+            if(curr === 'JPY'){
+                clock.html(toJapanTimeIfNeeded(timeStr, 1, '', 1));
+            } else {
+                clock.html(timeStr);
+                showLocalTimeOnHover('#gmt-clock');
+            }
             window.HeaderTimeUpdateTimeOutRef = setTimeout(update_time, 1000);
         };
         update_time();
@@ -796,6 +870,7 @@ Header.prototype = {
             page.client.clear_storage_values();
             LocalStore.remove('client.tokens');
             LocalStore.set('reality_check.ack', 0);
+            sessionStorage.removeItem('withdrawal_locked');
             var cookies = ['login', 'loginid', 'loginid_list', 'email', 'settings', 'reality_check', 'affiliate_token', 'affiliate_tracking', 'residence', 'allowed_markets'];
             var current_domain = ['.' + document.domain.split('.').slice(-2).join('.'), document.domain, '.' + document.domain];
             var cookie_path = ['/'];
@@ -822,114 +897,9 @@ Header.prototype = {
     },
 };
 
-var ToolTip = function() {
-    this.tooltip = $('#tooltip');
-
-    if (this.tooltip.length === 0) {
-        this.tooltip = $('<div id="tooltip"></div>');
-        this.tooltip.css('display', 'none')
-            .appendTo('body');
-    }
-
-    this.showing = {};
-    var that = this;
-    $(window).resize(function() { that.resize_tooltip(); });
-};
-
-ToolTip.prototype = {
-    attach: function() {
-        var that = this;
-        this.detach();
-
-        var targets = $( '[rel~=tooltip]' ),
-            target  = false,
-            tip     = false,
-            title   = false;
-
-        targets.on('mouseenter', function(e) {
-            tip = $(this).attr( 'title' );
-
-            if( !tip || tip === '' )
-                return false;
-
-            that.showing.target = $(this);
-            that.showing.tip = tip;
-
-            that.showing.target.removeAttr( 'title' );
-
-            that.tooltip.html(tip);
-            that.resize_tooltip();
-            that.reposition_tooltip_for(that.showing.target);
-            that.show_tooltip($(this));
-        });
-
-        targets.on('mouseleave', function() {
-            if(that.showing.target) {
-                that.showing.target.attr( 'title', that.showing.tip );
-            }
-            that.hide_tooltip();
-        });
-
-        targets.on('click', function() {
-            if(that.showing.target) {
-                that.showing.target.attr( 'title', that.showing.tip );
-            }
-            that.hide_tooltip();
-        });
-    },
-    detach: function() {
-        $( '[rel~=tooltip]' ).off('mouseenter');
-        $( '[rel~=tooltip]' ).off('mouseleave');
-        this.tooltip.off('click');
-    },
-    show_tooltip: function(target) {
-        this.tooltip.css({ display: ''});
-        this.tooltip.zIndex(target.zIndex() + 100);
-    },
-    hide_tooltip: function(tooltip) {
-        this.tooltip.html("");
-        this.tooltip.css({ top: 0, left: 0, display: 'none'});
-        this.tooltip.addClass('invisible');
-    },
-    resize_tooltip: function() {
-        if( $( window ).width() < this.tooltip.outerWidth() * 1.5 )
-            this.tooltip.css( 'max-width', $( window ).width() / 2 );
-        else
-            this.tooltip.css( 'max-width', 340 );
-    },
-    reposition_tooltip_for: function(target) {
-        this.tooltip.removeClass('invisible');
-
-        var pos_left = target.offset().left + ( target.outerWidth() / 2 ) - ( this.tooltip.outerWidth() / 2 ),
-            pos_top = target.offset().top - (this.tooltip.outerHeight() + 10);
-
-        this.tooltip.removeClass( 'left' );
-        this.tooltip.removeClass( 'right' );
-        this.tooltip.removeClass( 'top' );
-
-        if( pos_left < 0 ) {
-            pos_left = target.offset().left + target.outerWidth() / 2 - 20;
-            this.tooltip.addClass( 'left' );
-        }
-
-        if( pos_left + this.tooltip.outerWidth() > $( window ).width() ) {
-            pos_left = target.offset().left - this.tooltip.outerWidth() + target.outerWidth() / 2 + 20;
-            this.tooltip.addClass( 'right' );
-        }
-
-        if( pos_top < 0 ) {
-            pos_top  = target.offset().top + target.outerHeight() + 20;
-            this.tooltip.addClass( 'top' );
-        }
-
-        this.tooltip.css( { left: pos_left, top: pos_top} );
-    },
-};
-
 var Contents = function(client, user) {
     this.client = client;
     this.user = user;
-    this.tooltip = new ToolTip();
 };
 
 Contents.prototype = {
@@ -937,11 +907,9 @@ Contents.prototype = {
         this.activate_by_client_type();
         this.topbar_message_visibility();
         this.update_content_class();
-        this.tooltip.attach();
         this.init_draggable();
     },
     on_unload: function() {
-        this.tooltip.detach();
         if ($('.unbind_later').length > 0) {
             $('.unbind_later').off();
         }
@@ -953,7 +921,8 @@ Contents.prototype = {
                 return;
             }
             if(!page.client.is_virtual()) {
-                $('.by_client_type.client_real').removeClass('invisible');
+                // control-class is a fake class, only used to counteract ja-hide class
+                $('.by_client_type.client_real').not((japanese_client() ? ".ja-hide" : ".control-class")).removeClass('invisible');
                 $('.by_client_type.client_real').show();
 
                 $('#topbar').addClass('dark-blue');
@@ -1011,37 +980,43 @@ Contents.prototype = {
             }
             var c_config = countries_list[this.client.residence];
 
+            var $upgrade_msg = $('.upgrademessage'),
+                hiddenClass  = 'invisible';
+            var hide_upgrade = function() {
+                $upgrade_msg.addClass(hiddenClass);
+            };
+            var show_upgrade = function(url, msg) {
+                $upgrade_msg.removeClass(hiddenClass)
+                    .find('a').removeClass(hiddenClass)
+                        .attr('href', page.url.url_for(url)).html($('<span/>', {text: text.localize(msg)}));
+            };
+
             if (page.client.is_virtual()) {
-                var show_upgrade = true;
-                if (localStorage.getItem('jp_test_allowed')) {
-                    $('.virtual-upgrade-link').addClass('invisible');
-                    $('.vr-japan-upgrade-link').addClass('invisible');
-                    $('.vr-financial-upgrade-link').addClass('invisible');
-                    show_upgrade = false;           // do not show upgrade for user that filled up form
+                var show_upgrade_msg = true;
+                var show_virtual_msg = true;
+                if (localStorage.getItem('jp_test_allowed') === "1") {
+                    hide_upgrade();
+                    show_virtual_msg = false;
+                    show_upgrade_msg = false; // do not show upgrade for user that filled up form
                 }
-                for (var i=0;i<loginid_array.length;i++) {
+                for (var i = 0; i < loginid_array.length; i++) {
                     if (loginid_array[i].real) {
-                        $('.virtual-upgrade-link').addClass('invisible');
-                        $('.vr-japan-upgrade-link').addClass('invisible');
-                        $('.vr-financial-upgrade-link').addClass('invisible');
-                        show_upgrade = false;
+                        hide_upgrade();
+                        show_upgrade_msg = false;
                         break;
                     }
                 }
-                if (show_upgrade) {
+                if (show_upgrade_msg) {
+                    $upgrade_msg.find('> span').removeClass(hiddenClass);
                     if (c_config && c_config['gaming_company'] == 'none' && c_config['financial_company'] == 'maltainvest') {
-                        $('.vr-financial-upgrade-link').removeClass('invisible');
-                        $('.virtual-upgrade-link').addClass('invisible');
-                        $('.vr-japan-upgrade-link').addClass('invisible');
+                        show_upgrade('new_account/maltainvestws', 'Upgrade to a Financial Account');
                     } else if (c_config && c_config['gaming_company'] == 'none' && c_config['financial_company'] == 'japan') {
-                        $('.vr-japan-upgrade-link').removeClass('invisible');
-                        $('.virtual-upgrade-link').addClass('invisible');
-                        $('.vr-financial-upgrade-link').addClass('invisible');
+                        show_upgrade('new_account/japanws', 'Upgrade to a Real Account');
                     } else {
-                        $('.virtual-upgrade-link').removeClass('invisible');
-                        $('.vr-japan-upgrade-link').addClass('invisible');
-                        $('.vr-financial-upgrade-link').addClass('invisible');
+                        show_upgrade('new_account/realws', 'Upgrade to a Real Account');
                     }
+                } else if (show_virtual_msg) {
+                    $upgrade_msg.removeClass(hiddenClass).find('> span').removeClass(hiddenClass);
                 }
             } else {
                 var show_financial = false;
@@ -1059,9 +1034,10 @@ Contents.prototype = {
                     }
                 }
                 if (show_financial) {
-                    $('.financial-upgrade-link').removeClass('invisible');
+                    $('#virtual-text').parent().addClass('invisible');
+                    show_upgrade('new_account/maltainvestws', 'Open a Financial Account');
                 } else {
-                    $('.financial-upgrade-link').addClass('invisible');
+                    hide_upgrade();
                 }
             }
         }
@@ -1120,7 +1096,6 @@ Page.prototype = {
         } else {
             LocalStore.set('reality_check.ack', 0);
         }
-        $('#current_width').val(get_container_width());//This should probably not be here.
         if(!getCookieItem('language')) {
             var cookie = new CookieStorage('language');
             cookie.write(this.language());
@@ -1129,6 +1104,7 @@ Page.prototype = {
             sessionStorage.removeItem('showLoginPage');
             Login.redirect_to_login();
         }
+        this.check_language();
     },
     on_unload: function() {
         this.header.on_unload();
@@ -1163,6 +1139,7 @@ Page.prototype = {
         // cleaning the previous values
         page.client.clear_storage_values();
         sessionStorage.setItem('active_tab', '1');
+        sessionStorage.removeItem('withdrawal_locked');
         // set cookies: loginid, login
         page.client.set_cookie('loginid', loginid);
         page.client.set_cookie('login'  , token);
@@ -1225,7 +1202,37 @@ Page.prototype = {
             domain: '.' + location.hostname.split('.').slice(-2).join('.')
         });
     },
-    reload: function() {
-        window.location.reload();
+    reload: function(forcedReload) {
+        window.location.reload(forcedReload ? true : false);
+    },
+    check_new_release: function() { // calling this method is handled by GTM tags
+        var last_reload = localStorage.getItem('new_release_reload_time');
+        if(last_reload && last_reload * 1 + 10 * 60 * 1000 > moment().valueOf()) return; // prevent reload in less than 10 minutes
+        var currect_hash = $('script[src*="binary.min.js"],script[src*="binary.js"]').attr('src').split('?')[1];
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var latest_hash = xhttp.responseText;
+                if(latest_hash && latest_hash !== currect_hash) {
+                    localStorage.setItem('new_release_reload_time', moment().valueOf());
+                    page.reload(true);
+                }
+            }
+        };
+        xhttp.open('GET', page.url.url_for_static() + 'version?' + Math.random().toString(36).slice(2), true);
+        xhttp.send();
+    },
+    check_language: function() {
+        if (page.language() === 'ID') {
+          change_blog_link('id');
+        }
+        if (japanese_client()) {
+            $('.ja-hide').addClass('invisible');
+            $('.ja-show').attr('style', 'display: inline !important; visibility: visible;');
+            $('.ja-show-block').attr('style', 'display: inline-block !important; visibility: visible;');
+            $('.ja-no-padding').attr('style', 'padding-top: 0; padding-bottom: 0;');
+            $('#regulatory-text').removeClass('gr-9 gr-7-p')
+                                 .addClass('gr-12 gr-12-p');
+        }
     },
 };
