@@ -105,15 +105,6 @@ var Localizable = function(hash) {
 Localizable.prototype = {
     localize: function(text, params) {
         var index = text.replace(/[\s|.]/g, '_');
-        text = this.texts[index] || text;
-        // only do templating when explicitly required
-        return params ? template(text, params) : text;
+        return this.texts[index] || text;
     }
 };
-
-// for testing
-if (typeof module !== 'undefined') {
-    module.exports = {
-        Localizable: Localizable
-    };
-}

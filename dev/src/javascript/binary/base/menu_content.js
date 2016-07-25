@@ -3,7 +3,6 @@ var MenuContent = (function () {
 
     var that = {
         init: function (_menu_containers) {
-            if (/trading/.test(window.location.pathname)) return;
             _menu_containers.filter(':not(.follow-default)').delegate('.tm-a,.tm-a-2', 'click', function (event) {
                 event.preventDefault();
 
