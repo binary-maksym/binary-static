@@ -142,6 +142,13 @@ span.button.button-disabled button.button-disabled {
   cursor: default;
 }
 
+.button.fullwidth {
+  width: 100%;
+}
+.button.fullwidth span {
+  display: block;
+}
+
 form {
   margin: 0;
   padding: 0;
@@ -151,8 +158,7 @@ fieldset {
   position: relative;
   border: 1px solid #DEDEDE;
   padding: 5px;
-  background: -ms-linear-gradient(top, #fff 30%, #F2F2F2 90%);
-  border-bottom: 1px solid transparent;
+  margin-bottom: 10px;
 }
 fieldset#formlayout {
   background: none;
@@ -404,6 +410,10 @@ button.blue-button:hover {
   white-space: nowrap;
 }
 
+p.no-para-margin {
+  margin: 0;
+}
+
 *, *:after, *:before {
   transition: opacity 0.2s, color 0.2s, background 0.2s;
 }
@@ -570,31 +580,7 @@ button.blue-button:hover {
   width: 90%;
 }
 #header #client-logged-out #btn_login {
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-  line-height: 100%;
-  background: #2E8836;
-  border-radius: 4px;
-  text-transform: capitalize;
-  padding: 10px 25px 10px 25px;
-  display: inline-block;
-  letter-spacing: 0.75px;
-  border: 0;
-  text-transform: uppercase;
-  padding: 0px 10px;
-  white-space: nowrap;
-  font-weight: normal;
-  font-size: 0.8em;
-  line-height: 2em;
-  margin: 0.8em 0;
-}
-#header #client-logged-out #btn_login:visited {
-  color: #fff;
-}
-#header #client-logged-out #btn_login:hover, #header #client-logged-out #btn_login:active {
-  text-decoration: none;
-  background-color: #14602B;
+  margin-bottom: 0;
 }
 #header #client-logged-out, #header #loginid-switch-form {
   text-align: right;
@@ -1115,7 +1101,6 @@ meter#password-meter {
   display: block;
   width: 10.9em;
   height: 0.5em;
-  -webkit-appearance: none;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
@@ -1123,6 +1108,46 @@ meter#password-meter {
 meter#password-meter::-webkit-meter-bar {
   background: #F2F2F2;
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.25) inset;
+}
+
+#accordion .ui-accordion-header {
+  border-radius: 0;
+  margin-bottom: -3px;
+}
+#accordion .ui-icon {
+  display: none;
+  visibility: hidden;
+}
+#accordion .ui-accordion-icons, #accordion .ui-accordion-icons .ui-accordion-icons {
+  padding-left: 1.5em;
+}
+#accordion .ui-state-active, #accordion .ui-state-default, #accordion .ui-state-hover {
+  border: none;
+  outline: none;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+#accordion .ui-state-active.ui-state-default, #accordion .ui-state-active.ui-state-default.ui-state-hover {
+  background-image: url("../images/common/arrow_down.svg");
+  background-color: #2a3052;
+  border-color: #2a3052;
+  color: #fff;
+}
+#accordion .ui-state-default, #accordion .ui-state-hover {
+  background-image: url("../images/common/arrow_right.svg");
+  background-color: #F2F2F2;
+  border: 1px solid #C2C2C2;
+  color: #000;
+}
+#accordion .ui-state-hover {
+  background-color: #DEDEDE;
+}
+#accordion .ui-accordion-content {
+  padding-top: 0;
+  border-radius: 0;
+}
+#accordion .ui-widget-content {
+  border: 1px solid #C2C2C2;
 }
 
 /* pages */
@@ -1412,9 +1437,6 @@ meter#password-meter::-webkit-meter-bar {
   font-weight: bold;
   margin-bottom: 5px;
 }
-.contact-content p.no-para-margin {
-  margin: 0;
-}
 .contact-content .hr-line {
   border-bottom: 1px solid #DEDEDE;
 }
@@ -1529,7 +1551,9 @@ a.close:hover {
 }
 .inpage_popup_container_ws .inpage_popup_content_box #sell_content_wrapper {
   max-height: 90vh;
-  overflow: scroll;
+  overflow: auto;
+  overflow-x: hidden;
+  -ms-overflow-x: hidden;
 }
 .inpage_popup_container_ws .inpage_popup_content_box #sell_content_wrapper #sell_details_chart_wrapper {
   border-right: 1px solid #44484C;
@@ -2062,37 +2086,6 @@ table .loss, table .lower {
 .static_full {
   margin-top: 40px;
 }
-.static_full .sidebar ul {
-  font-size: 90%;
-}
-.static_full .sidebar ul li {
-  list-style-image: none;
-  margin: 0;
-  background: #F2F2F2;
-  line-height: 150%;
-  border-bottom: 1px solid #FFFFFF;
-}
-.static_full .sidebar ul li:hover {
-  background: #DEDEDE;
-}
-.static_full .sidebar ul li a {
-  font-weight: normal;
-  text-decoration: none;
-  display: block;
-  padding: 5px 5px 5px 10px;
-  color: #2a3052;
-}
-.static_full .sidebar ul li.selected {
-  background: #2a3052;
-}
-.static_full .sidebar ul li.selected a {
-  color: #fff;
-  text-decoration: none;
-}
-.static_full .sidebar .open-account {
-  background: #F2F2F2;
-  padding: 20px;
-}
 .static_full .section {
   border-bottom: 1px solid #DEDEDE;
 }
@@ -2137,6 +2130,38 @@ table .loss, table .lower {
 .static_full .sidebar-button a:hover, .static_full .sidebar-button a:active {
   text-decoration: none;
   background-color: #14602B;
+}
+
+.sidebar ul {
+  font-size: 90%;
+}
+.sidebar ul li {
+  list-style-image: none;
+  margin: 0;
+  background: #F2F2F2;
+  line-height: 150%;
+  border-bottom: 1px solid #FFFFFF;
+}
+.sidebar ul li:hover {
+  background: #DEDEDE;
+}
+.sidebar ul li a {
+  font-weight: normal;
+  text-decoration: none;
+  display: block;
+  padding: 5px 5px 5px 10px;
+  color: #2a3052;
+}
+.sidebar ul li.selected {
+  background: #2a3052;
+}
+.sidebar ul li.selected a {
+  color: #fff;
+  text-decoration: none;
+}
+.sidebar .open-account {
+  background: #F2F2F2;
+  padding: 20px;
 }
 
 .payment-agent .faded {
@@ -2198,44 +2223,22 @@ table .loss, table .lower {
   margin: 5px 0;
 }
 
-#accordion table {
+#pa_list #accordion table {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
-#accordion table td {
+#pa_list #accordion table td {
   padding: 10px 4px;
 }
-#accordion table td:nth-of-type(1) {
+#pa_list #accordion table td:nth-of-type(1) {
   width: 40%;
 }
-#accordion .ui-icon {
-  display: none;
-  visibility: hidden;
-}
-#accordion .ui-state-active, #accordion .ui-state-default, #accordion .ui-state-hover {
-  border: none !important;
-  outline: none;
-}
-#accordion .ui-state-active.ui-state-default, #accordion .ui-state-active.ui-state-default.ui-state-hover {
-  background: #2a3052 !important;
-  color: #fff !important;
-}
-#accordion .ui-state-default, #accordion .ui-state-hover {
-  background: #F2F2F2 !important;
-  color: #000 !important;
-}
-#accordion .ui-accordion-content {
-  padding-top: 0 !important;
-}
-#accordion .ui-widget-content {
-  border: 1px solid #DEDEDE !important;
-}
-#accordion #supported_banks, #accordion .supported_banks {
+#pa_list #accordion #supported_banks, #pa_list #accordion .supported_banks {
   text-align: center;
   padding-top: 30px;
 }
-#accordion .supported_banks img {
+#pa_list #accordion .supported_banks img {
   width: 72px;
   height: 57px;
   margin: 3px;
@@ -2301,15 +2304,18 @@ table .loss, table .lower {
   text-align: left;
   margin-bottom: 20px;
   box-shadow: 0 0 2px #DEDEDE;
+  direction: ltr;
 }
 .timeline .event .header {
   background: #F2F2F2;
   font-weight: bold;
   padding: 12px;
+  direction: ltr;
 }
 .timeline .event .event-body {
   border: 1px solid #F2F2F2;
   padding: 12px;
+  direction: ltr;
 }
 .timeline .event.featured .header {
   background: #e98024;
@@ -2451,6 +2457,7 @@ table .loss, table .lower {
 }
 .about-us .border-bottom {
   border-bottom: 1px solid #DEDEDE;
+  padding-bottom: 0;
 }
 .about-us .border-right-top {
   border-right: 1px solid #DEDEDE;
@@ -3524,6 +3531,7 @@ div.kineticjs-content {
 }
 #trading_socket_container .barrier_class input, #trading_socket_container #jhigh_barrier_row select, #trading_socket_container #jlow_barrier_row select, #trading_socket_container #jbarrier_row select, #trading_socket_container #period {
   width: 175px;
+  margin-right: 5px;
 }
 #trading_socket_container #period {
   font-size: 80%;
@@ -3993,19 +4001,6 @@ button:disabled {
 #virtual-form #tooltip-password, #change-password #tooltip-password, .usersettingssecurityws-content #tooltip-password {
   text-decoration: none;
 }
-#virtual-form meter#password-meter, #change-password meter#password-meter, .usersettingssecurityws-content meter#password-meter {
-  width: 10.9em;
-  height: 0.5em;
-  -webkit-appearance: none;
-  border: 1px solid #C2C2C2;
-  border-radius: 3px;
-  vertical-align: top;
-  display: block;
-}
-#virtual-form meter#password-meter::-webkit-meter-bar, #change-password meter#password-meter::-webkit-meter-bar, .usersettingssecurityws-content meter#password-meter::-webkit-meter-bar {
-  background: #F2F2F2;
-  box-shadow: 0 5px 5px -5px #44484C inset;
-}
 #virtual-form div.hint, #change-password div.hint, .usersettingssecurityws-content div.hint {
   margin-top: 10px;
 }
@@ -4030,6 +4025,10 @@ body .calls_recording {
 }
 body .all-hide {
   display: none !important;
+}
+body ul.checked li {
+  background-position: left;
+  padding-left: 35px;
 }
 
 body.EN .calls_recording {

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
         <style id="antiClickjack">body{display:none !important;}</style>
         <script type="text/javascript">
             if (self === top) {
@@ -45,7 +44,8 @@
                 return conLang;
             }
             function redirect() {
-                window.location.href = (lang || 'en').toLowerCase() + '/' + (getCookieItem('loginid') ? 'trading' : 'home') + '.html';
+                window.location.href = (lang || 'en').toLowerCase() + '/' + (getCookieItem('loginid') ? 'trading' : 'home') +
+                    '.html' + window.location.search;
             }
             function isDelayedRedirect() {
                 if(isGtmApplicable() && !window.redirectTimeOut) {
@@ -56,12 +56,12 @@
                 }
             }
             function isGtmApplicable() {
-                return /www\.binary\.com/i.test(window.location.hostname);
+                return /(www|staging)\.binary\.com/i.test(window.location.hostname);
             }
             function pushEvent() {
                 if(isGtmApplicable()) {
                     dataLayer.push({
-                        'event': 'fireEvent',
+                        'event': 'page_load',
                         'eventCallback': function() {
                             isDelayedRedirect();
                         }

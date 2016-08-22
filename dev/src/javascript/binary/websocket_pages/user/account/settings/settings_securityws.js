@@ -1,191 +1,177 @@
-var securityws = (function(){
+var SecurityWS = (function() {
     "use strict";
-    var $form,
-        init_done;
+    var $form;
+    var current_state;
+    var STATE = {
+        WAIT_AUTH:    'WAIT_AUTH',
+        QUERY_LOCKED: 'QUERY_LOCKED',
+        LOCKED:       'LOCKED',
+        UNLOCKED:     'UNLOCKED',
+        TRY_UNLOCK:   'TRY_UNLOCK',
+        TRY_LOCK:     'TRY_LOCK',
+        DONE:         'DONE',
+    };
 
-    var clearErrors = function(){
+    function clearErrors() {
         $("#SecuritySuccessMsg").text('');
         $("#invalidinputfound").text('');
-        $('#errorcashierlockpassword1').contents().filter(function () {
-          return this.nodeType === 3;
-        }).remove();
-    };
+    }
 
-    var init = function(){
-        init_done = true;
-
-        $form   = $("#changeCashierLock");
-
-        clearErrors();
-
-        if(checkIsVirtual()) {
-            return;
+    function checkIsVirtual() {
+        if (!page.client.is_virtual()) {
+            return false;
         }
+        $form.hide();
+        $('#SecuritySuccessMsg')
+            .addClass('notice-msg center-text')
+            .text(Content.localize().textFeatureUnavailable);
+        return true;
+    }
 
-        $form   = $("#changeCashierLock");
-        clearErrors();
-
-        var loginToken = CommonData.getApiToken();
-        $form.find("button").on("click", function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            if(validateForm() === false){
-                return false;
-            }
-            BinarySocket.send({"authorize": loginToken, "passthrough": {"value": $(this).attr("value") === "Update" ? "lock_password" : "unlock_password"}});
+    function makeAuthRequest() {
+        BinarySocket.send({
+            authorize: CommonData.getLoginToken(),
         });
-        BinarySocket.send({"authorize": loginToken, "passthrough": {"value": "is_locked"}});
-    };
+    }
 
-    var checkIsVirtual = function(){
-        if(page.client.is_virtual()) {
-            $form.hide();
-            $('#SecuritySuccessMsg').addClass('notice-msg center-text').text(Content.localize().textFeatureUnavailable);
-            return true;
-        }
-        return false;
-    };
+    function init() {
+        Content.populate();
+        $form = $("#changeCashierLock");
+        if (checkIsVirtual()) return;
 
-    var validateForm = function(){
-        var isValid = true;
-        clearErrors();
+        current_state = STATE.WAIT_AUTH;
+        BinarySocket.init({onmessage: handler});
+        makeAuthRequest();
+    }
 
-        var pwd1 = document.getElementById("cashierlockpassword1").value,
-            pwd2 = document.getElementById("cashierlockpassword2").value,
-            errorPassword = document.getElementById('errorcashierlockpassword1'),
-            errorRPassword = document.getElementById('errorcashierlockpassword2'),
-            isVisible = $("#repasswordrow").is(':visible');
+    function authorised() {
+        current_state = STATE.QUERY_LOCKED;
+        BinarySocket.send({
+            cashier_password: "1",
+        });
+    }
 
-        if(isVisible === true){
-          if (!Validate.errorMessagePassword(pwd1, pwd2, errorPassword, errorRPassword)){
-            isValid = false;
-          }
-        } else if (!/[ -~]{6,25}/.test(pwd1)) {
-          errorPassword.textContent = Content.errorMessage('min', 6);
-          isValid = false;
-        }
-        return isValid;
-    };
-    var isAuthorized =  function(response){
-        if(response.echo_req.passthrough){
-            var option = response.echo_req.passthrough.value;
-            var pwd = $("#cashierlockpassword1").val();
+    function updatePage(config) {
+        $('legend').text(text.localize(config.legend));
+        $('#lockInfo').text(text.localize(config.info));
+        $form.find('button')
+            .attr('value', config.button)
+            .html(text.localize(config.button));
+    }
 
-            switch(option){
-                case   "lock_password" :
-                        BinarySocket.send({
-                            "cashier_password": "1",
-                            "lock_password": pwd
-                        });
-                        break;
-                case   "unlock_password" :
-                        BinarySocket.send({
-                            "cashier_password": "1",
-                            "unlock_password": pwd
-                        });
-                        break;
-                case   "is_locked" :
-                        BinarySocket.send({
-                            "cashier_password": "1",
-                            "passthrough" : {"value" : "lock_status"}
-                        });
-                        break ;
-                default:
-                        if(!init_done) {
-                            init();
-                        }
-                        break;
-            }
-        }
-    };
-    var responseMessage = function(response){
-
-       var resvalue;
-
-       if(response.echo_req.passthrough && (response.echo_req.passthrough.value === "lock_status") ){
-            var passthrough = response.echo_req.passthrough.value;
-            resvalue = response.cashier_password;
-            if(parseInt(resvalue) === 1){
-                $("#repasswordrow").hide();
-                $("legend").text(text.localize("Unlock Cashier"));
-                $("#lockInfo").text(text.localize("Your cashier is locked as per your request - to unlock it, please enter the password."));
-                $form.find("button").attr("value","Unlock Cashier");
-                $form.find("button").html(text.localize("Unlock Cashier"));
-                $('#changeCashierLock').show();
-            }
-            else if(parseInt(resvalue) === 0){
-                $("#repasswordrow").show();
-                $("legend").text(text.localize("Lock Cashier"));
-                $("#lockInfo").text(text.localize("An additional password can be used to restrict access to the cashier."));
-                $form.find("button").attr("value","Update");
-                $form.find("button").html(text.localize("Update"));
-                $('#password-meter-div').attr('style', 'display:block');
-                if (isIE() === false) {
-                  $('#cashierlockpassword1').on('input', function() {
-                    $('#password-meter').attr('value', testPassword($('#cashierlockpassword1').val())[0]);
-                  });
-                } else {
-                  $('#password-meter').remove();
-                }
-                $('#changeCashierLock').show();
-            }
-        }
-        else{
-            if("error" in response) {
-                if("message" in response.error) {
-                    $("#invalidinputfound").text(text.localize(response.error.message));
-                }
-                return false;
-            }
-            else{
-                resvalue = response.echo_req.cashier_password;
-                if(parseInt(resvalue) === 1){
-                    $("#changeCashierLock").hide();
-                    $("#invalidinputfound").text('');
-                    $("#SecuritySuccessMsg").text(text.localize('Your settings have been updated successfully.'));
-                }
-                else{
-                    $("#invalidinputfound").text(text.localize('Sorry, an error occurred while processing your account.'));
-                    return false;
-                }
-            }
-        }
-        return;
-    };
-    var SecurityApiResponse = function(response){
-        if(checkIsVirtual()) {
+    function setupRepeatPasswordForm() {
+        $("#repasswordrow").show();
+        $('#password-meter-div').css({display: 'block'});
+        if (isIE()) {
+            $('#password-meter').remove();
             return;
         }
-        var type = response.msg_type;
-        if (type === "cashier_password" || (type === "error" && "cashier_password" in response.echo_req)){
-           responseMessage(response);
-        }else if(type === "authorize" || (type === "error" && "authorize" in response.echo_req))
-        {
-            isAuthorized(response);
+        $('#cashierlockpassword1').on('input', function() {
+            $('#password-meter').attr('value', testPassword($('#cashierlockpassword1').val())[0]);
+        });
+    }
+
+    function lockedStatus(response) {
+        var locked = +response.cashier_password === 1;
+        if (locked) {
+            updatePage({
+                legend: 'Unlock Cashier',
+                info:   'Your cashier is locked as per your request - to unlock it, please enter the password.',
+                button: 'Unlock Cashier',
+            });
+            $("#repasswordrow").hide();
+        } else {
+            updatePage({
+                legend: 'Lock Cashier',
+                info:   'An additional password can be used to restrict access to the cashier.',
+                button: 'Update',
+            });
+            setupRepeatPasswordForm();
         }
-    };
+        current_state = locked ? STATE.LOCKED : STATE.UNLOCKED;
+        bind_validation.simple($form[0], {
+            schema: locked ? {} : getUnlockedSchema(),
+            submit: function(e, info) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (info.errors.length > 0) {
+                    return;
+                }
+                current_state = locked ?
+                    STATE.TRY_UNLOCK :
+                    STATE.TRY_LOCK;
+                makeAuthRequest();
+            },
+        });
+        $form.show();
+    }
+
+    function getUnlockedSchema() {
+        var err = Content.localize().textPasswordsNotMatching;
+        function matches(value, data) {
+            return value === data.cashierlockpassword1;
+        }
+
+        return {
+            cashierlockpassword1: [ValidateV2.password],
+            cashierlockpassword2: [dv.check(matches, err)],
+        };
+    }
+
+    function makeTryingRequest() {
+        var key = current_state === STATE.TRY_UNLOCK ?
+            'unlock_password' :
+            'lock_password';
+        var params  = {cashier_password: '1'};
+        params[key] = $('#cashierlockpassword1').val();
+        BinarySocket.send(params);
+    }
+
+    function tryStatus(response) {
+        if (response.error) {
+            current_state = current_state === STATE.TRY_UNLOCK ?
+                STATE.LOCKED :
+                STATE.UNLOCKED;
+            $("#invalidinputfound").text(text.localize(response.error.message));
+            return;
+        }
+        $form.hide();
+        clearErrors();
+        $("#SecuritySuccessMsg").text(text.localize('Your settings have been updated successfully.'));
+        current_state = STATE.DONE;
+    }
+
+    function handler(msg) {
+        if (checkIsVirtual()) return;
+        var response = JSON.parse(msg.data);
+        if (response.msg_type === 'authorize') {
+            switch (current_state) {
+                case STATE.WAIT_AUTH:
+                    authorised();
+                    break;
+                case STATE.TRY_UNLOCK:
+                case STATE.TRY_LOCK:
+                    makeTryingRequest();
+                    break;
+                default:
+                    break;
+            }
+        } else if (response.msg_type === 'cashier_password') {
+            switch (current_state) {
+                case STATE.QUERY_LOCKED:
+                    lockedStatus(response);
+                    break;
+                case STATE.TRY_UNLOCK:
+                case STATE.TRY_LOCK:
+                    tryStatus(response);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     return {
-        init : init,
-        SecurityApiResponse : SecurityApiResponse
+        init: init,
     };
 })();
-
-pjax_config_page_require_auth("user/settings/securityws", function() {
-    return {
-        onLoad: function() {
-            Content.populate();
-
-            BinarySocket.init({
-                onmessage: function(msg){
-                    var response = JSON.parse(msg.data);
-                    if (response) {
-                        securityws.SecurityApiResponse(response);
-                    }
-                }
-            });
-
-            securityws.init();
-        }
-    };
-});

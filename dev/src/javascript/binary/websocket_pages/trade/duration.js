@@ -218,6 +218,7 @@ var Durations = (function(){
 
     var durationPopulate = function() {
         var unit = document.getElementById('duration_units');
+        if (!unit.options[unit.selectedIndex]) return;
         var unitMinValue = unit.options[unit.selectedIndex].getAttribute('data-minimum'),
             unitValue = Defaults.get('duration_amount') || unitMinValue;
         unit.value = Defaults.get('duration_units') &&
@@ -235,7 +236,7 @@ var Durations = (function(){
         // jquery for datepicker
         var amountElement = $('#duration_amount');
         if (unit.value === 'd') {
-            var tomorrow = window.time ? new Date(window.time) : new Date();
+            var tomorrow = window.time ? window.time.toDate() : new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
 
             amountElement.datepicker({
@@ -247,9 +248,9 @@ var Durations = (function(){
                     }
                     else{
                         var date = new Date(value);
-                        var today = window.time ? new Date(window.time) : new Date();
+                        var today = window.time ? window.time.toDate() : new Date();
                         dayDiff = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
-                    }                    
+                    }
                     amountElement.val(dayDiff);
                     amountElement.trigger('change');
                 }
@@ -260,7 +261,7 @@ var Durations = (function(){
 
         $('.pickadate').datepicker('destroy');
         $('.pickadate').datepicker({
-            minDate: window.time ? new Date(window.time) : new Date(),
+            minDate: window.time ? window.time.toDate() : new Date(),
             dateFormat: 'yy-mm-dd'
         });
 
@@ -346,7 +347,7 @@ var Durations = (function(){
         var expiry_time = document.getElementById('expiry_time');
         $('#expiry_date').val(end_date);
         Defaults.set('expiry_date', end_date);
-        if(moment(end_date).isAfter(moment(window.time),'day')){
+        if (moment(end_date).isAfter(moment(window.time),'day')) {
             Durations.setTime('');
             Defaults.remove('expiry_time');
             StartDates.setNow();

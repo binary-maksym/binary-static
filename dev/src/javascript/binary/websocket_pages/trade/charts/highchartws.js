@@ -58,7 +58,7 @@ var Highchart = (function() {
           type: 'line',
           renderTo: el,
           backgroundColor: null, /* make background transparent */
-          height: el.parentElement.offsetHeight
+          height: el.parentElement.offsetHeight || 450
         },
         title:{
           text: title,
@@ -375,14 +375,14 @@ var Highchart = (function() {
       request.style = 'candles';
     }
 
-    if(!is_expired && !sell_spot_time && parseInt(window.time._i)/1000 < end_time && !chart_subscribed) {
+    if(!is_expired && !sell_spot_time && (window.time.valueOf() / 1000) < end_time && !chart_subscribed) {
         request.subscribe = 1;
     }
 
     var contracts_response = window.contracts_for;
 
     if (contracts_response && contracts_response.echo_req.contracts_for === underlying) {
-      if (contracts_response.contracts_for.feed_license) {
+      if (contracts_response.contracts_for && contracts_response.contracts_for.feed_license) {
         handle_delay(contracts_response.contracts_for.feed_license);
         save_feed_license(contracts_response.echo_req.contracts_for, contracts_response.contracts_for.feed_license);
       }
@@ -397,7 +397,7 @@ var Highchart = (function() {
   }
 
   function show_entry_error() {
-    if (!entry_tick_time && chart_delayed === false && start_time && parseInt((window.time._i/1000)) >= parseInt(start_time)) {
+    if (!entry_tick_time && chart_delayed === false && start_time && window.time.unix() >= parseInt(start_time)) {
       show_error('', text.localize('Waiting for entry tick.'));
     } else if (!history_send){
       history_send = true;
