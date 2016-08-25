@@ -63121,6 +63121,7 @@ pjax_config_page_require_auth('user/change_password', function() {
     };
 
     var createPortfolioRow = function(data) {
+        console.log(data);
         var longCode = typeof module !== 'undefined' ? 
             data.longcode : 
             (japanese_client() ? toJapanTimeIfNeeded(data.expiry_time, '', data.longcode) : data.longcode);

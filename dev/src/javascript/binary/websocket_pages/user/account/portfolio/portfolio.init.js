@@ -20,6 +20,7 @@ var PortfolioWS =  (function() {
     };
 
     var createPortfolioRow = function(data) {
+        console.log(data);
         var longCode = typeof module !== 'undefined' ? 
             data.longcode : 
             (japanese_client() ? toJapanTimeIfNeeded(data.expiry_time, '', data.longcode) : data.longcode);
