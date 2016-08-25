@@ -52006,7 +52006,7 @@ function showLocalTimeOnHover(s) {
 function toJapanTimeIfNeeded(gmtTimeStr, showTimeZone, longcode, hideSeconds){
     var match;
     if (longcode && longcode !== '') {
-      match = longcode.match(/(\d{4}-\d{2}-\d{2})\s?(\d{2}:\d{2}:\d{2})?/);
+      match = longcode.match(/((?:\d{4}-\d{2}-\d{2})\s?(\d{2}:\d{2}:\d{2})?(?:\sGMT)?)/);
       if (!match) return longcode;
     }
 
@@ -63052,7 +63052,9 @@ pjax_config_page_require_auth('user/change_password', function() {
             'transaction_id' : c.transaction_id,
             'contract_id'    : c.contract_id,
             'payout'         : parseFloat(c.payout).toFixed(2),
-            'longcode'       : typeof module !== 'undefined' ? c.longcode : japanese_client() ? toJapanTimeIfNeeded(void 0, '', c.longcode) : c.longcode,
+            'longcode'       : typeof module !== 'undefined' ? 
+                c.longcode : (japanese_client() ? 
+                toJapanTimeIfNeeded(void 0, void 0, c.longcode) : c.longcode),
             'currency'       : c.currency,
             'buy_price'      : addComma(parseFloat(c.buy_price)),
             'app_id'         : c.app_id
@@ -63126,7 +63128,7 @@ pjax_config_page_require_auth('user/change_password', function() {
         console.log(data);
         var longCode = typeof module !== 'undefined' ? 
             data.longcode : 
-            (japanese_client() ? toJapanTimeIfNeeded(data.expiry_time, '', data.longcode) : data.longcode);
+            (japanese_client() ? toJapanTimeIfNeeded(void 0, void 0, data.longcode) : data.longcode);
 
         $('#portfolio-body').append(
             $('<tr class="flex-tr" id="' + data.contract_id + '">' +

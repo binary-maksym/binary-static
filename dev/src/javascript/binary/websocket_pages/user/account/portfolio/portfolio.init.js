@@ -23,7 +23,7 @@ var PortfolioWS =  (function() {
         console.log(data);
         var longCode = typeof module !== 'undefined' ? 
             data.longcode : 
-            (japanese_client() ? toJapanTimeIfNeeded(data.expiry_time, '', data.longcode) : data.longcode);
+            (japanese_client() ? toJapanTimeIfNeeded(void 0, void 0, data.longcode) : data.longcode);
 
         $('#portfolio-body').append(
             $('<tr class="flex-tr" id="' + data.contract_id + '">' +

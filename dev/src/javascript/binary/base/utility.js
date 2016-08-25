@@ -237,7 +237,7 @@ function showLocalTimeOnHover(s) {
 function toJapanTimeIfNeeded(gmtTimeStr, showTimeZone, longcode, hideSeconds){
     var match;
     if (longcode && longcode !== '') {
-      match = longcode.match(/(\d{4}-\d{2}-\d{2})\s?(\d{2}:\d{2}:\d{2})?/);
+      match = longcode.match(/((?:\d{4}-\d{2}-\d{2})\s?(\d{2}:\d{2}:\d{2})?(?:\sGMT)?)/);
       if (!match) return longcode;
     }
 
