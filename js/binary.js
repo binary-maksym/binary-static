@@ -52016,8 +52016,10 @@ function toJapanTimeIfNeeded(gmtTimeStr, showTimeZone, longcode, hideSeconds){
 
     if(typeof gmtTimeStr === 'number'){
         time = moment.utc(gmtTimeStr*1000);
-    } else {
+    } else if(gmtTimeStr){
         time = moment.utc(gmtTimeStr, 'YYYY-MM-DD HH:mm:ss');
+    } else {
+        time = moment.utc(match[0], 'YYYY-MM-DD HH:mm:ss');
     }
 
     if (!time.isValid()) {
@@ -63050,7 +63052,7 @@ pjax_config_page_require_auth('user/change_password', function() {
             'transaction_id' : c.transaction_id,
             'contract_id'    : c.contract_id,
             'payout'         : parseFloat(c.payout).toFixed(2),
-            'longcode'       : typeof module !== 'undefined' ? c.longcode : japanese_client() ? toJapanTimeIfNeeded(c.expiry_time, '', c.longcode) : c.longcode,
+            'longcode'       : typeof module !== 'undefined' ? c.longcode : japanese_client() ? toJapanTimeIfNeeded(void 0, '', c.longcode) : c.longcode,
             'currency'       : c.currency,
             'buy_price'      : addComma(parseFloat(c.buy_price)),
             'app_id'         : c.app_id

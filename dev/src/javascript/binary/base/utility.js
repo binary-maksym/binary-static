@@ -247,8 +247,10 @@ function toJapanTimeIfNeeded(gmtTimeStr, showTimeZone, longcode, hideSeconds){
 
     if(typeof gmtTimeStr === 'number'){
         time = moment.utc(gmtTimeStr*1000);
-    } else {
+    } else if(gmtTimeStr){
         time = moment.utc(gmtTimeStr, 'YYYY-MM-DD HH:mm:ss');
+    } else {
+        time = moment.utc(match[0], 'YYYY-MM-DD HH:mm:ss');
     }
 
     if (!time.isValid()) {
