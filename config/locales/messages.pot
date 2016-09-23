@@ -42,13 +42,13 @@ msgstr ""
 msgid "$250,000 - $1,000,000"
 msgstr ""
 
-msgid "%1 %2 (\"API\") Terms and Conditions"
-msgstr ""
-
 msgid "%1 %2 has been credited to your Virtual money account %3"
 msgstr ""
 
 msgid "%1 Affiliate Program Terms and Conditions"
+msgstr ""
+
+msgid "%1 Application Program Interface (\"API\") Terms and Conditions"
 msgstr ""
 
 msgid "%1 Please click the link below to restart the password recovery process. If you require further assistance, please contact our Customer Support."
@@ -186,6 +186,9 @@ msgstr ""
 msgid "%1 offers the world's financial markets in a simple, user-friendly platform."
 msgstr ""
 
+msgid "%1 opens an office in the QSentral office building in central Kuala Lumpur to further expand its IT development team."
+msgstr ""
+
 msgid "%1 prices are benchmarked against the interbank options market, so you always get best-in-class prices for your trades."
 msgstr ""
 
@@ -268,16 +271,13 @@ msgstr ""
 msgid "%1's systems are now processing in excess of 1 million transactions/day (including virtual accounts)."
 msgstr ""
 
-msgid "%1’s <a href=\"%2\">Volatility Indices</a> are now available 24/7 on MetaTrader 5. Additional assets will be released very soon."
-msgstr ""
-
 msgid "%ctx(minimum duration, for example minimum 15 seconds)min"
 msgstr ""
 
 msgid "&#8220;%1 is one of the oldest and trustworthy partners we ever had. We have worked together for many years.&#8221;"
 msgstr ""
 
-msgid "&#8220;We have used www.binary.com for the last 8 years and highly recommend binary to all our members worldwide&#8221;"
+msgid "&#8220;We have used www.binary.com for the last 8 years and highly recommend binary to all our members worldwide.&#8221;"
 msgstr ""
 
 msgid "'<strong>Long</strong>' contracts generate profits when the index rises and loses when it falls."
@@ -456,9 +456,6 @@ msgstr ""
 msgid "<strong>Additional business exposure:</strong> You will increase awareness of your services and generate new business."
 msgstr ""
 
-msgid "<strong>Advanced tools for fundamental and technical analysis,</strong> including indicators, charts, and more."
-msgstr ""
-
 msgid "<strong>All durations:</strong> from 10 seconds to 365 days."
 msgstr ""
 
@@ -520,9 +517,6 @@ msgid "<strong>Higher/Lower</strong> - predict if the market will end higher or 
 msgstr ""
 
 msgid "<strong>Higher/Lower</strong> - where you can profit from the market ending higher or lower than a target price."
-msgstr ""
-
-msgid "<strong>Highly competitive spreads with no commission.</strong>"
 msgstr ""
 
 msgid "<strong>IMPORTANT DISCLAIMER</strong> - %1 is not affiliated with any of the Payment Agents listed above. Each Payment Agent operates as an independent service provider and is not endorsed, guaranteed or otherwise approved by %1. CUSTOMERS DEAL WITH PAYMENT AGENTS AT THEIR SOLE RISK AND PERIL. Customers are advised to check the credentials of Payment Agents before sending them any money. %1 shall not in any circumstance be held responsible for transactions made between customers and Payment Agents."
@@ -607,9 +601,6 @@ msgid "<strong>Stock Indices</strong> - trade all major worldwide stock indices.
 msgstr ""
 
 msgid "<strong>Stock indices</strong> - trade all major worldwide stock indices."
-msgstr ""
-
-msgid "<strong>Subscriptions to a wide range of Expert Advisors,</strong> automated trading applications from the MetaTrader Market."
 msgstr ""
 
 msgid "<strong>Take early profits</strong> - sell your long-term trades at market prices before they expire."
@@ -734,6 +725,12 @@ msgstr ""
 msgid "A proactive approach to solving problems and delivering client solutions"
 msgstr ""
 
+msgid "A scanned copy of a utility bill or bank statement (no more than 3 months old)."
+msgstr ""
+
+msgid "A scanned copy of your passport, driving licence (provisional or full) or identity card, showing your name and date of birth. Your document must be valid for at least 6 months after this date."
+msgstr ""
+
 msgid "A strong and passionate interest in Marketing and Advertising"
 msgstr ""
 
@@ -821,10 +818,10 @@ msgstr ""
 msgid "Account Opening"
 msgstr ""
 
-msgid "Account Transfer"
+msgid "Account Password"
 msgstr ""
 
-msgid "Account Type"
+msgid "Account Transfer"
 msgstr ""
 
 msgid "Account balance: "
@@ -903,6 +900,9 @@ msgid "Agreement Restrictions"
 msgstr ""
 
 msgid "Agreement for documents"
+msgstr ""
+
+msgid "All Partnership Options"
 msgstr ""
 
 msgid "All affiliate activities must be conducted in a professional and proper manner. You shall be expected to act with good faith and integrity in your relationships with your referrals, and always act in the best interests of your referrals."
@@ -1015,9 +1015,6 @@ msgstr ""
 msgid "Anyone who has potential to grow or increase traffic to %1"
 msgstr ""
 
-msgid "App ID"
-msgstr ""
-
 msgid "Applications"
 msgstr ""
 
@@ -1037,6 +1034,9 @@ msgid "Appropriateness"
 msgstr ""
 
 msgid "Appropriateness Test"
+msgstr ""
+
+msgid "Apps"
 msgstr ""
 
 msgid "Apr"
@@ -1282,6 +1282,9 @@ msgstr ""
 msgid "Binary Bot released"
 msgstr ""
 
+msgid "Binary Group Services Sdn Bhd, 30-10, Q Sentral, Jalan Stesen Sentral 2, 50470 Kuala Lumpur"
+msgstr ""
+
 msgid "Binary Group Services Sdn Bhd, C-13-02, iTech Tower, Jalan Impact, Cyber 6, 63000 Cyberjaya, Selangor Darul Ehsan"
 msgstr ""
 
@@ -1297,6 +1300,9 @@ msgstr ""
 msgid "Binary Investments (Europe) Ltd, Suite 2, Tower Road, Msida MSD1825, Malta. Licensed and regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (license no. IS/70156)."
 msgstr ""
 
+msgid "Binary KK granted Japan license"
+msgstr ""
+
 msgid "Binary KK, Hiroo Miyata Bldg 3F, 9-16, Hiroo 1-chome, Shibuya-ku, Tokyo 150-0012, Japan"
 msgstr ""
 
@@ -1304,6 +1310,9 @@ msgid "Binary Ltd, with registered office address situated at <span itemprop='lo
 msgstr ""
 
 msgid "Binary Options Basics"
+msgstr ""
+
+msgid "Binary Shop"
 msgstr ""
 
 msgid "Binary Trading is simple to learn and to execute."
@@ -1339,6 +1348,9 @@ msgid "Binary trading is ideal for both individuals and market professionals."
 msgstr ""
 
 msgid "Binary trading is very simple."
+msgstr ""
+
+msgid "Binary's Japanese subsidiary Binary KK is licensed by the KLFB as a Type 1 Financial Instruments Business in Japan."
 msgstr ""
 
 msgid "Binary's Japanese subsidiary Binary KK opens an office in Tokyo and starts the process of applying for relevant licenses."
@@ -1446,6 +1458,12 @@ msgstr ""
 msgid "Cashier"
 msgstr ""
 
+msgid "Cashier Password"
+msgstr ""
+
+msgid "Cashier is locked, please <a class=\"pjaxload\" href=\"%1\">contact us</a> for more information."
+msgstr ""
+
 msgid "Cashier password"
 msgstr ""
 
@@ -1458,10 +1476,13 @@ msgstr ""
 msgid "Change Password"
 msgstr ""
 
-msgid "Chart"
+msgid "Change the password used for deposits and withdrawals."
 msgstr ""
 
-msgid "Charts"
+msgid "Change your main login password."
+msgstr ""
+
+msgid "Chart"
 msgstr ""
 
 msgid "Check out our commission rates below:"
@@ -1548,13 +1569,13 @@ msgstr ""
 msgid "Choose your own strike."
 msgstr ""
 
+msgid "Citizens of Afghanistan, Belgium, Bosnia and Herzegovina, Guyana, Iraq, Lao PDR, Syria, Uganda, Vanuatu or Yemen shall be restricted from opening an account with Binary Investments (Europe) Ltd."
+msgstr ""
+
 msgid "Classification of assets requiring hedge"
 msgstr ""
 
 msgid "Click here to retry"
-msgstr ""
-
-msgid "Click the button below to download MetaTrader."
 msgstr ""
 
 msgid "Client classification"
@@ -1687,9 +1708,6 @@ msgid "Confirmation and understandings"
 msgstr ""
 
 msgid "Conflicts Policy"
-msgstr ""
-
-msgid "Congratulations! Your account has been created."
 msgstr ""
 
 msgid "Construction"
@@ -1848,9 +1866,6 @@ msgstr ""
 msgid "Create New Token"
 msgstr ""
 
-msgid "Create a MetaTrader account to trade on the MetaTrader 5 platform."
-msgstr ""
-
 msgid "Create clear, concise and engaging content for display on the company's website, blog, social media outlets, and marketing materials"
 msgstr ""
 
@@ -1900,6 +1915,9 @@ msgid "Customer Service Representatives"
 msgstr ""
 
 msgid "Customer Support"
+msgstr ""
+
+msgid "Cyberjaya Office"
 msgstr ""
 
 msgid "Daily Reset Indices"
@@ -1962,12 +1980,6 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-msgid "Demo"
-msgstr ""
-
-msgid "Demo Account"
-msgstr ""
-
 msgid "Demonstrate the ability to think / act quickly and multi-task as needed to execute effective campaigns"
 msgstr ""
 
@@ -1986,25 +1998,13 @@ msgstr ""
 msgid "Deposit Bonus"
 msgstr ""
 
-msgid "Deposit from"
-msgstr ""
-
-msgid "Deposit funds into your MetaTrader account from your Binary account:"
-msgstr ""
-
-msgid "Deposit is done. Transaction ID:"
+msgid "Deposit is locked, please <a class=\"pjaxload\" href=\"%1\">contact us</a> for more information."
 msgstr ""
 
 msgid "Deposit of"
 msgstr ""
 
 msgid "Deposit or withdraw to your account via bank-wire, credit card, or e-cash wallet."
-msgstr ""
-
-msgid "Deposit to"
-msgstr ""
-
-msgid "Deposit to MetaTrader account"
 msgstr ""
 
 msgid "Deposit: %1 working day"
@@ -2017,6 +2017,9 @@ msgid "Deposit: Instant"
 msgstr ""
 
 msgid "Depositing and withdrawing funds"
+msgstr ""
+
+msgid "Deposits and withdrawal for your account is not allowed at this moment. Please contact %1 to unlock it."
 msgstr ""
 
 msgid "Derivative"
@@ -2128,12 +2131,6 @@ msgid "Dormant and Inactive Accounts"
 msgstr ""
 
 msgid "Download CSV"
-msgstr ""
-
-msgid "Download MetaTrader"
-msgstr ""
-
-msgid "Download MetaTrader for Windows"
 msgstr ""
 
 msgid "Drive rapid growth and business development, to support the company's sales and marketing objectives"
@@ -2703,7 +2700,16 @@ msgstr ""
 msgid "Germany"
 msgstr ""
 
+msgid "Get JPY 1,000,000"
+msgstr ""
+
 msgid "Get Started"
+msgstr ""
+
+msgid "Get USD 10,000.00"
+msgstr ""
+
+msgid "Get more virtual money"
 msgstr ""
 
 msgid "Get your price"
@@ -2941,9 +2947,6 @@ msgid "If you need assistance feel free to contact our %1Customer Support"
 msgstr ""
 
 msgid "If you need assistance feel free to contact our <a class=\"pjaxload\" href=\"%1\">Customer Support</a>."
-msgstr ""
-
-msgid "If you previously downloaded MetaTrader 5 directly from MetaTrader’s website, please select “%1” from the list of available brokers."
 msgstr ""
 
 msgid "If you select \"Asian Fall\", you will win the payout if the <strong>last tick</strong> is <strong>lower</strong> than the <strong>average</strong> of the ticks."
@@ -3248,9 +3251,6 @@ msgstr ""
 msgid "Investor Compensation Scheme"
 msgstr ""
 
-msgid "Investor Password (read-only access)"
-msgstr ""
-
 msgid "Involved in evaluation of regulatory compliance and risk management. Work with the Head of Departments to improve business processes."
 msgstr ""
 
@@ -3306,9 +3306,6 @@ msgid "Japan"
 msgstr ""
 
 msgid "Japan website Download Text for Pre-contract Document"
-msgstr ""
-
-msgid "Japan website Download Text for Terms and Conditions Document"
 msgstr ""
 
 msgid "Japan website Eliminating Antisocial Forces List item 1"
@@ -3758,7 +3755,7 @@ msgstr ""
 msgid "Join our team of bright, talented professionals. Work collaboratively with us to promote a high-tech platform that has been one of the most recognised in the binary options trading industry for over 15 years."
 msgstr ""
 
-msgid "Joshua Cavallaro <span> Markets And You Trader.</span>"
+msgid "Joshua Cavallaro <span> Markets And You Trader</span>"
 msgstr ""
 
 msgid "Jul"
@@ -3800,7 +3797,7 @@ msgstr ""
 msgid "Knowledge of probability theory, stochastic calculus, numerical methods, Monte-Carlo simulation, differential equations, econometrics, and statistical modeling"
 msgstr ""
 
-msgid "LOG OUT"
+msgid "Kuala Lumpur Office"
 msgstr ""
 
 msgid "Languages"
@@ -3869,9 +3866,6 @@ msgstr ""
 msgid "Level of Education"
 msgstr ""
 
-msgid "Leverage"
-msgstr ""
-
 msgid "Leverage social-media tools and channels to identify, engage, and convert potential new customers and partners"
 msgstr ""
 
@@ -3908,9 +3902,6 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
-msgid "Linux Instructions"
-msgstr ""
-
 msgid "Live chat:"
 msgstr ""
 
@@ -3920,9 +3911,6 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-msgid "Log into the application using your MetaTrader account number and your MetaTrader account password."
-msgstr ""
-
 msgid "Log-in to your %1 affiliate account and click on: Finances &rarr; Payment instructions."
 msgstr ""
 
@@ -3930,9 +3918,6 @@ msgid "Log-in to your %1 affiliate account and click on: Marketing &rarr; All Me
 msgstr ""
 
 msgid "Log-in to your %1 affiliate account and click on: Reports &rarr; Traffic Report."
-msgstr ""
-
-msgid "Login"
 msgstr ""
 
 msgid "Login History"
@@ -3971,22 +3956,16 @@ msgstr ""
 msgid "MENA FFXPO Award"
 msgstr ""
 
-msgid "MacOS Instructions"
-msgstr ""
-
-msgid "Main Password (trading access)"
-msgstr ""
-
 msgid "Maintain accurate system pricing parameters"
 msgstr ""
 
 msgid "Maintain adequate speed and volume of output"
 msgstr ""
 
-msgid "Make a Deposit"
+msgid "Major Pairs"
 msgstr ""
 
-msgid "Make a deposit or withdraw."
+msgid "Make a Deposit"
 msgstr ""
 
 msgid "Make your trade"
@@ -4005,9 +3984,6 @@ msgid "Manage security, intrusion detection, DDoS protection and PCI compliance 
 msgstr ""
 
 msgid "Manage the company's cashier system"
-msgstr ""
-
-msgid "Manage your account access and security settings."
 msgstr ""
 
 msgid "Manage your authorised applications."
@@ -4095,12 +4071,6 @@ msgid "Memorable date"
 msgstr ""
 
 msgid "Memorable town/city"
-msgstr ""
-
-msgid "MetaTrader Accounts Management"
-msgstr ""
-
-msgid "MetaTrader Main Password"
 msgstr ""
 
 msgid "Method"
@@ -4229,6 +4199,9 @@ msgstr ""
 msgid "New Password"
 msgstr ""
 
+msgid "New Trade"
+msgstr ""
+
 msgid "New password"
 msgstr ""
 
@@ -4320,9 +4293,6 @@ msgid "Novice traders can use our intuitive visual platform to learn about tradi
 msgstr ""
 
 msgid "Now"
-msgstr ""
-
-msgid "Now Introducing MetaTrader 5 on %1"
 msgstr ""
 
 msgid "Number of ticks"
@@ -4901,6 +4871,9 @@ msgstr ""
 msgid "Proficiency in a second language (oral and written) is preferred"
 msgstr ""
 
+msgid "Profile"
+msgstr ""
+
 msgid "Profit"
 msgstr ""
 
@@ -5019,6 +4992,9 @@ msgid "Ref."
 msgstr ""
 
 msgid "Reference ID"
+msgstr ""
+
+msgid "Refresh page"
 msgstr ""
 
 msgid "Regent Markets Group Ltd. renames to Binary Ltd."
@@ -5186,9 +5162,6 @@ msgstr ""
 msgid "Run daily payments reports and report suspected fraud"
 msgstr ""
 
-msgid "Run the installation file and follow the instructions."
-msgstr ""
-
 msgid "Russia"
 msgstr ""
 
@@ -5241,6 +5214,9 @@ msgid "Secret question"
 msgstr ""
 
 msgid "Security"
+msgstr ""
+
+msgid "Security & Limits"
 msgstr ""
 
 msgid "Security Disclaimer"
@@ -5363,6 +5339,9 @@ msgstr ""
 msgid "Sign me up"
 msgstr ""
 
+msgid "Sign out"
+msgstr ""
+
 msgid "Sign up as a tester and look for Binary.com-related projects."
 msgstr ""
 
@@ -5465,19 +5444,10 @@ msgstr ""
 msgid "Start Trading"
 msgstr ""
 
-msgid "Start Trading with MetaTrader 5"
-msgstr ""
-
 msgid "Start learning"
 msgstr ""
 
 msgid "Start time"
-msgstr ""
-
-msgid "Start trading with your Demo Account"
-msgstr ""
-
-msgid "Start trading with your Real Account"
 msgstr ""
 
 msgid "State/Province"
@@ -5604,12 +5574,6 @@ msgid "Supplementary Terms and Conditions for Financial Products offered by Bina
 msgstr ""
 
 msgid "Supporting the Group's global recruiting and talent management needs"
-msgstr ""
-
-msgid "Take advantage of numerous benefits, including:"
-msgstr ""
-
-msgid "Take your trading to the next level through this powerful interface, recognised as the benchmark standard worldwide."
 msgstr ""
 
 msgid "Talk to us"
@@ -5939,7 +5903,7 @@ msgstr ""
 msgid "The company does not guarantee the ability to sell a contract prior to its expiration time."
 msgstr ""
 
-msgid "The company has various deposit methods available, each with their own timing for deposits, some of which might not be available for withdrawals. Full details of deposits and withdrawals methods available including settlement times are available <a href='%1' class='pjaxload'>here:</a>"
+msgid "The company has various deposit methods available, each with their own timing for deposits, some of which might not be available for withdrawals. Full details of deposits and withdrawals methods available including settlement times are available <a href='%1' class='pjaxload'>here.</a>"
 msgstr ""
 
 msgid "The company holds customer funds in separate bank accounts to the operational accounts which would not, in the event of insolvency, form part of the Company's assets. This meets the Gambling Commission's requirements for the segregation of customer funds at the level: <strong>medium protection</strong>."
@@ -6174,6 +6138,9 @@ msgstr ""
 msgid "This bonus will be processed and credited to a client's account when:"
 msgstr ""
 
+msgid "This contract can not be traded in the final 2 minutes before settlement"
+msgstr ""
+
 msgid "This contract has LOST"
 msgstr ""
 
@@ -6234,7 +6201,7 @@ msgstr ""
 msgid "This website does not collect personally identifying information about you except when you specifically and knowingly provide it. There is a technology called \"cookies\" which can be used to provide tailored information from a website. A cookie is an element of data that a website can send to your browser, which may then store it on your system. You can set your browser to notify you when you receive a cookie, giving you the chance to decide whether to accept it. If you do not accept the cookie, then you will need to input your loginID and password again at every form required to enter into the system. You are advised to choose this option if you have concerns about the security of your personal browser or PC."
 msgstr ""
 
-msgid "This website is marketed in the UK and Isle of Man by Binary (IOM) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles, licenced and regulated by (1) the Gambling Supervision Commission in the Isle of Man, British Isles, current online gambling licence issued on 31 August 2012, and for UK clients by (2) the UK Gambling Commission - <a href='%1' target='_blank'>view license</a>. This website is marketed in the rest of the EU, for investment products by Binary Investments (Europe) Ltd., Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Malta, licenced and regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (license no. IS/70156), and for gaming products by Binary (Europe) Ltd., Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Malta, licenced and regulated by (1) the Malta Gaming Authority in Malta, licence no MGA/CL2/118/2000, 26th May 2015 and for UK clients by (2) the UK Gambling Commission - <a href='%2' target='_blank'>view license</a>, and for Irish clients by (3) the Revenue Commissioners in Ireland, current remote bookmaker's licence issued on 29 September 2015 (licence no 1010285). This website's services are not made available in the USA, Japan, Costa Rica or Hong Kong, or to persons under age 18."
+msgid "This website is marketed in the UK and Isle of Man by Binary (IOM) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles, licenced and regulated by (1) the Gambling Supervision Commission in the Isle of Man, British Isles, current online gambling licence issued on 31 August 2012, and for UK clients by (2) the UK Gambling Commission - <a href='%1' target='_blank'>view license</a>. This website is marketed in the rest of the EU, for investment products by Binary Investments (Europe) Ltd., Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Malta, licenced and regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (license no. IS/70156), and for gaming products by Binary (Europe) Ltd., Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Malta, licenced and regulated by (1) the Malta Gaming Authority in Malta, licence no MGA/CL2/118/2000, 26th May 2015 and for UK clients by (2) the UK Gambling Commission - <a href='%2' target='_blank'>view license</a>, and for Irish clients by (3) the Revenue Commissioners in Ireland, current remote bookmaker's licence issued on 29 September 2015 (licence no 1010285). This website's services are not made available in certain countries such as the USA, Costa Rica, Hong Kong, or to persons under age 18."
 msgstr ""
 
 msgid "Thorough knowledge of bash scripting, as well as experience with scripting languages such as Perl and PHP"
@@ -6246,7 +6213,13 @@ msgstr ""
 msgid "Tick"
 msgstr ""
 
+msgid "TickTrade App"
+msgstr ""
+
 msgid "Tier"
+msgstr ""
+
+msgid "Time"
 msgstr ""
 
 msgid "Time out until"
@@ -6279,18 +6252,6 @@ msgstr ""
 msgid "To change your name, date of birth, country of residence, or email, please contact <a href=\"%1\">Customer Support</a>."
 msgstr ""
 
-msgid "To create a Real account for MetaTrader, you need to authenticate your Binary account:"
-msgstr ""
-
-msgid "To create a real account for MetaTrader, <a href=\"%1\">upgrade to %2 real money account</a>."
-msgstr ""
-
-msgid "To create a real account for MetaTrader, switch to your %1 real money account."
-msgstr ""
-
-msgid "To deposit or withdraw from your MetaTrader Real Account, switch to your Binary.com Real Account."
-msgstr ""
-
 msgid "To enable cookies, follow the instructions below for the browser version that you are using."
 msgstr ""
 
@@ -6304,6 +6265,9 @@ msgid "To reset your password, enter the e-mail address you registered in the fi
 msgstr ""
 
 msgid "Token"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "Total Cost"
@@ -6396,7 +6360,7 @@ msgstr ""
 msgid "Transact in"
 msgstr ""
 
-msgid "Transaction performed by"
+msgid "Transaction performed by %1 (App ID: %2)"
 msgstr ""
 
 msgid "Transfer"
@@ -6412,9 +6376,6 @@ msgid "Transfer to Login ID"
 msgstr ""
 
 msgid "Transfer to Payment Agent"
-msgstr ""
-
-msgid "Transfer to client"
 msgstr ""
 
 msgid "Translate the ongoing business needs of the company into a suitable IT infrastructure"
@@ -6573,16 +6534,16 @@ msgstr ""
 msgid "Verification token"
 msgstr ""
 
-msgid "Verify Main Password"
-msgstr ""
-
 msgid "Verify new password"
 msgstr ""
 
-msgid "Version 41. Last modified 2016-06-27."
+msgid "Version 42. Last modified 2016-09-14."
 msgstr ""
 
 msgid "View"
+msgstr ""
+
+msgid "View Details"
 msgstr ""
 
 msgid "View Updated Portfolio"
@@ -6609,13 +6570,7 @@ msgstr ""
 msgid "View your financial assessment settings."
 msgstr ""
 
-msgid "View your historical transactions."
-msgstr ""
-
 msgid "View your login history."
-msgstr ""
-
-msgid "View your open positions."
 msgstr ""
 
 msgid "View your personal information."
@@ -6625,9 +6580,6 @@ msgid "View your statement"
 msgstr ""
 
 msgid "View your trading and withdrawal limits."
-msgstr ""
-
-msgid "View your trading profit/loss."
 msgstr ""
 
 msgid "Virtual Account"
@@ -6675,7 +6627,7 @@ msgstr ""
 msgid "We also offer specialized pay-out structures to affiliates who offer a trading advice in connection with, and in relation to our commodities. <a href=\"mailto:%1\">Contact our affiliate manager, Karen Yap for details</a>."
 msgstr ""
 
-msgid "We are authorised and regulated by the Malta Financial Services Authority (\"MFSA\") under the Investment Services Act (Cap. 370, Laws of Malta) (the \"Act\") to carry on investment business.  We are exclusively authorised by the MFSA to deal on own account (i.e. offer and act as counterparty to trades) and this in relation to financial derivative products (primarily binary options) relating to foreign exchange, indices, stocks and other financial products or assets (\"Financial Products\"). We are not authorised to and do not offer or provide investment advice or any other investment services other than dealing on own account in Financial Products. Should you feel that you require investment advice or investment services other that those described above then you should contact an independent financial advisor or firm."
+msgid "We are authorised and regulated by the Malta Financial Services Authority (\"MFSA\") under the Investment Services Act (Cap. 370, Laws of Malta) (the \"Act\") to carry on investment business.  We are authorised by the MFSA to deal on own account (i.e. offer and act as counterparty to trades) and to execute orders on behalf of other persons, both services are in relation to financial derivative products (primarily binary options) relating to foreign exchange, indices, stocks and other financial products or assets (\"Financial Products\"). We are not authorised to and do not offer or provide investment advice or any other investment services other than those described above. Should you feel that you require investment advice or investment services other that those described above then you should contact an independent financial advisor or firm."
 msgstr ""
 
 msgid "We are committed to making sure your personal data and transactions are secure:"
@@ -6805,9 +6757,6 @@ msgid "Weekday"
 msgstr ""
 
 msgid "Weekend quotes"
-msgstr ""
-
-msgid "Welcome!"
 msgstr ""
 
 msgid "Well-developed organizational, administrative, and/or accounting skills"
@@ -6993,18 +6942,6 @@ msgstr ""
 msgid "Withdraw"
 msgstr ""
 
-msgid "Withdraw from"
-msgstr ""
-
-msgid "Withdraw from MetaTrader account"
-msgstr ""
-
-msgid "Withdraw funds from your MetaTrader account into your Binary account:"
-msgstr ""
-
-msgid "Withdraw to"
-msgstr ""
-
 msgid "Withdraw: %1 working day"
 msgstr ""
 
@@ -7014,10 +6951,13 @@ msgstr ""
 msgid "Withdraw: Not applicable"
 msgstr ""
 
+msgid "Withdrawal"
+msgstr ""
+
 msgid "Withdrawal Limits"
 msgstr ""
 
-msgid "Withdrawal is done. Transaction ID:"
+msgid "Withdrawal for your account is not allowed at this moment. Please contact %1 to unlock it."
 msgstr ""
 
 msgid "Withdrawal is locked, please <a class=\"pjaxload\" href=\"%1\">contact us</a> for more information."
@@ -7089,12 +7029,6 @@ msgstr ""
 msgid "You are advised that the Binary Options offered by %1 are not traded under the rules of any recognised, designated or regulated exchange. Consequently, engaging in Binary Options trading may expose you to substantially greater risks than investments which are so traded."
 msgstr ""
 
-msgid "You are currently logged in to your real money account with %1 (%2)."
-msgstr ""
-
-msgid "You are currently logged in to your virtual money account (%2)."
-msgstr ""
-
 msgid "You are in default or breach of any covenant, obligation or condition contained in this Agreement, and if such default is not cured within seven days of receipt of written notice from the Company;"
 msgstr ""
 
@@ -7123,6 +7057,12 @@ msgid "You can choose payouts from $1 to $50,000. This wide payout range is idea
 msgstr ""
 
 msgid "You can close your trade before expiry to lock in profits."
+msgstr ""
+
+msgid "You can request more virtual money if your virtual balance falls below JPY 100,000."
+msgstr ""
+
+msgid "You can request more virtual money if your virtual balance falls below USD 1,000.00."
 msgstr ""
 
 msgid "You can sell back long-term trades at any time to profit from changing market conditions."
@@ -7308,16 +7248,7 @@ msgstr ""
 msgid "You'll be surprised by the returns you can make."
 msgstr ""
 
-msgid "You'll find answers to most of your questions on the <a href='' target='_blank' id='faq_url'>FAQ</a> page."
-msgstr ""
-
 msgid "You're using a Virtual Account."
-msgstr ""
-
-msgid "Your %1 account is unavailable. For any questions please contact %2."
-msgstr ""
-
-msgid "Your %1 accounts are unavailable. For any questions please contact %2."
 msgstr ""
 
 msgid "Your %1 day withdrawal limit is currently %2 %3 (or equivalent in other currency)."
@@ -7329,9 +7260,6 @@ msgstr ""
 msgid "Your ID will be stored in a cookie and identified every time a prospect clicks on your affiliate link and lands on %1 and in that event, opens an account with us."
 msgstr ""
 
-msgid "Your Name"
-msgstr ""
-
 msgid "Your Property"
 msgstr ""
 
@@ -7341,10 +7269,10 @@ msgstr ""
 msgid "Your account has no trading activity."
 msgstr ""
 
-msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
+msgid "Your account is currently suspended. Only withdrawals are now permitted. For further information, please contact %1."
 msgstr ""
 
-msgid "Your account is fully authenticated. You can view your %1trading limits here"
+msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
 msgstr ""
 
 msgid "Your account is fully authenticated. You can view your <a class=\"pjaxload\" href=\"%1\">trading limits here</a>."
@@ -7354,9 +7282,6 @@ msgid "Your account is not fully authenticated. Please visit the <a class=\"pjax
 msgstr ""
 
 msgid "Your account is not fully authenticated. Please visit the <a href=\"%1\">authentication</a> page for more information."
-msgstr ""
-
-msgid "Your account is registered as a Payment Agent."
 msgstr ""
 
 msgid "Your account should not be used as a banking facility and deposits should only be made with a view to using funds to place contracts. The Company is not a financial institution, Clients will not receive interest on deposits. Should you make repeated deposits and withdrawals without commensurate contracts being placed, we reserve the right to pass on to your accounts, without prior notice, any bank charges we have incurred before closing the account."
@@ -7399,9 +7324,6 @@ msgid "Your money is always safe with %1. At all times, it is held in segregated
 msgstr ""
 
 msgid "Your name, email address and contact number"
-msgstr ""
-
-msgid "Your new account has been created."
 msgstr ""
 
 msgid "Your password and login ID are unique and passwords are hashed so that not even %1 staff can read them. This is the reason why we cannot retrieve your password and have to issue you with a new one to your email address if you cannot recall it."
@@ -7557,6 +7479,9 @@ msgstr ""
 msgid "m"
 msgstr ""
 
+msgid "min 1,000 and max 100,000"
+msgstr ""
+
 msgid "minimum available duration"
 msgstr ""
 
@@ -7641,7 +7566,7 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-msgid "you are not resident in a restricted country such as the USA, Japan, Hong Kong, Bahamas, Costa Rica, Malaysia, Malta, Iran, North Korea, Jersey, or Iraq;"
+msgid "you are not resident in a restricted country such as Afghanistan, Bosnia and Herzegovina, Costa Rica, Guyana, Hong Kong, Iran, Iraq, Jersey, Lao PDR, Malaysia, Malta, North Korea, Syria, Uganda, USA, Vanuatu or Yemen;"
 msgstr ""
 
 msgid "you are over 18 years of age, unless you are an Estonian resident whereby you would have to be over 21;"
@@ -8316,6 +8241,36 @@ msgstr ""
 msgid "{JAPAN ONLY}years"
 msgstr ""
 
+msgid "{Japan Only} Download Terms and Conditions Document file"
+msgstr ""
+
+msgid "{Japan Only}Binary option specialist for over 15 years "
+msgstr ""
+
+msgid "{Japan Only}Fully licenced in Japan"
+msgstr ""
+
+msgid "{Japan Only}Live chart tools"
+msgstr ""
+
+msgid "{Japan Only}Payout from 1 to 10"
+msgstr ""
+
+msgid "{Japan Only}Segregated Customer Account Balances are 100% Safe"
+msgstr ""
+
+msgid "{Japan Only}Trade all binary option types"
+msgstr ""
+
+msgid "{Japan Only}Trade the major currencies"
+msgstr ""
+
+msgid "{Japan Only}Two-way pricing"
+msgstr ""
+
+msgid "{Japan Only}Worldwide award-winning pioneer in FX binary options trading"
+msgstr ""
+
 msgid "Online Trading platform for binary options on Forex, Indices, Commodities and Smart Indices"
 msgstr ""
 
@@ -8364,14 +8319,8 @@ msgstr ""
 msgid "Sharp Prices. Smart Trading."
 msgstr ""
 
-msgid "MetaTrader"
-msgstr ""
-
 msgid "Account Details"
 msgstr ""
 
 msgid "Terms and Conditions Approval"
-msgstr ""
-
-msgid "Trading with MetaTrader 5"
 msgstr ""
